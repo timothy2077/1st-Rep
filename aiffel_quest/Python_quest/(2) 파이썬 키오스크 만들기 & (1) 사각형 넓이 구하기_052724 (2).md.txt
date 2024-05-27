@@ -1,0 +1,1272 @@
+﻿```python
+# (2)파이썬 키오스크 만들기
+
+# 커피 메뉴와 가격
+coffee = ['americano', 'latte', 'mocha'] 
+c_price = [2000, 3000, 3000]
+
+# 논커피 메뉴와 가격
+non_coffee = ['yuza_tea', 'green_tea', 'choco_latte']
+n_price = [2500, 2500, 3000]
+```
+
+
+```python
+# 전체 메뉴와 가격 
+menu = ['americano', 'latte', 'mocha', 'yuza_tea', 'green_tea', 'choco_latte']
+price = [2000, 3000, 3000, 2500, 2500, 3000]
+```
+
+
+```python
+# 논커피 메뉴와 가격을 출력해보세요.
+for i in range(len(non_coffee)):
+    print(f"{non_coffee[i]}의 가격은 {n_price[i]}원 입니다.")
+
+```
+
+    yuza_tea의 가격은 2500원 입니다.
+    green_tea의 가격은 2500원 입니다.
+    choco_latte의 가격은 3000원 입니다.
+
+
+
+```python
+class Kiosk:
+    def __init__(self):
+        self.menu = ['americano', 'latte', 'mocha', 'yuza_tea', 'green_tea', 'choco_latte']
+        self.price = [2000, 3000, 3000, 2500, 2500, 3000]
+```
+
+
+```python
+class Kiosk:
+    def __init__(self):
+        self.menu = ['americano', 'latte', 'mocha', 'yuza_tea', 'green_tea', 'choco_latte']  # 메뉴 항목을 리스트로 정의합니다.
+        self.price = [2000, 3000, 3000, 2500, 2500, 3000]  # 각 메뉴 항목의 가격을 리스트로 정의합니다.
+
+```
+
+
+```python
+a = Kiosk()  # 객체를 생성합니다.
+a.menu  # 객체 속성을 출력합니다.
+```
+
+
+
+
+    ['americano', 'latte', 'mocha', 'yuza_tea', 'green_tea', 'choco_latte']
+
+
+
+
+```python
+class Kiosk:
+    def __init__(self):
+        self.menu = {'americano': 2000, 'latte': 3000, 'mocha': 3000, 'yuza_tea': 2500, 'green_tea': 2500, 'choco_latte': 3000}
+
+    def print_menu_and_prices(self):
+        print("메뉴와 가격을 출력합니다.")
+        for item, price in self.menu.items():
+            print(f"{item} : {price}원")
+
+
+```
+
+
+```python
+kiosk = Kiosk()
+```
+
+
+```python
+kiosk.print_menu_and_prices()
+```
+
+
+    ---------------------------------------------------------------------------
+
+    AttributeError                            Traceback (most recent call last)
+
+    /tmp/ipykernel_48/3947280735.py in <module>
+    ----> 1 kiosk.print_menu_and_prices()
+    
+
+    AttributeError: 'Kiosk' object has no attribute 'print_menu_and_prices'
+
+
+
+```python
+class Kiosk:
+    def __init__(self):
+        self.menu = {'americano': 2000, 'latte': 3000, 'mocha': 3000, 'yuza_tea': 2500, 'green_tea': 2500, 'choco_latte': 3000}
+
+    def print_menu_and_prices(self):
+        print("메뉴와 가격을 출력합니다.")
+        for item, price in self.menu.items():
+            print(f"{item} : {price}원")
+
+# 객체 생성
+kiosk = Kiosk()
+
+# 메뉴와 가격 출력
+kiosk.print_menu_and_prices()
+
+```
+
+    메뉴와 가격을 출력합니다.
+    americano : 2000원
+    latte : 3000원
+    mocha : 3000원
+    yuza_tea : 2500원
+    green_tea : 2500원
+    choco_latte : 3000원
+
+
+
+```python
+class Kiosk: 
+    # 문제 2-1의 답을 입력하세요.     
+    def __init__(self):
+        self.menu = ['americano', 'latte', 'mocha', 'yuza_tea', 'green_tea', 'choco_latte']
+        self.price = [2000, 3000, 3000, 2500, 2500, 3000]
+
+# 메뉴 출력 메서드
+    def menu_print(self):
+        for i in range(len(self.menu)):
+            print(i+1, self.menu[i], ' : ', self.price[i], '원')
+```
+
+
+```python
+a = Kiosk()  # 객체 생성 
+a.menu_print()  # 메뉴 출력
+```
+
+    1 americano  :  2000 원
+    2 latte  :  3000 원
+    3 mocha  :  3000 원
+    4 yuza_tea  :  2500 원
+    5 green_tea  :  2500 원
+    6 choco_latte  :  3000 원
+
+
+
+```python
+# 문제 2-2. 주문 메서드  
+# 음료의 이름과 가격을 출력하세요.  
+
+def menu_select(self):
+    n = int(input("음료의 번호를 입력하세요 : "))  # 음료 번호 입력
+    self.price_sum = self.price[n-1]  # 선택 음료의 가격
+    # 문제 2-2. 음료의 이름과 가격을 출력하세요.
+    print(self.menu[n-1], ' : ', self.price_sum, '원')  # 메뉴
+```
+
+
+```python
+# 주문 메서드   
+def menu_select(self):
+    n = 0
+    while n < 1 or len(menu) < n:
+        n = int(input("음료 번호를 입력하세요 : "))  # 음료 번호 입력
+    
+        # 메뉴판에 있는 음료 번호일 때
+        if 1 <= n & n <= len(menu):
+            self.price_sum = self.price[n-1]  # 선택 음료의 가격
+            # 문제 2-2의 답을 입력하세요. 
+            print(self.menu[n-1], ' : ', self.price_sum, '원')  # 메뉴
+    
+        # 메뉴판에 없는 번호일 때
+        else:
+            print("없는 메뉴입니다. 다시 주문해 주세요.")
+```
+
+
+```python
+class Kiosk:    
+    def __init__(self):
+        # 문제 2-1의 답을 입력하세요. 
+        self.menu = ['americano', 'latte', 'mocha', 'yuza_tea', 'green_tea', 'choco_latte']
+        self.price = [2000, 3000, 3000, 2500, 2500, 3000]
+
+    # 메뉴 출력 메서드
+    def menu_print(self):
+        for i in range(len(self.menu)):
+            print(i+1, self.menu[i], ' : ', self.price[i], '원')
+
+    # 주문 메서드
+    def menu_select(self):
+        print()  # 줄 바꿈
+        n = 0
+        while n < 1 or len(menu) < n:
+            n = int(input("음료 번호를 입력하세요 : "))  # 음료 번호 입력
+
+            # 메뉴판에 있는 음료 번호일때
+            if 1 <= n & n <= len(menu):
+                self.price_sum = self.price[n-1]  # 선택 음료의 가격
+                # 문제 2-2의 답을 입력하세요. 
+                print(self.menu[n-1], ' : ', self.price_sum, '원') 
+        
+             # 메뉴판에 없는 번호일 때
+            else:  
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+```
+
+
+```python
+# 문제 2-3. 주문 메서드      
+
+# 음료의 온도에 따라 temp 변수를 "HOT" 또는 "ICE"로 지정하세요.
+
+class Kiosk: 
+    def __init__(self):
+        # 문제 2-1의 답을 입력하세요. 
+        self.menu =  ['americano', 'latte', 'mocha', 'yuza_tea', 'green_tea', 'choco_latte']
+        self.price = [2000, 3000, 3000, 2500, 2500, 3000]
+
+    # 메뉴 출력 메서드
+    def menu_print(self):
+        for i in range(len(self.menu)):
+            print(i + 1, self.menu[i], ' : ', self.price[i], '원')
+
+    # 주문 메서드
+    def menu_select(self):
+        print()  # 줄 바꿈
+        n = 0
+        while n < 1 or len(menu) < n:
+            n = int(input("음료 번호를 입력하세요 : "))  # 음료 번호 입력
+
+            # 메뉴판에 있는 음료 번호일때
+            if 1 <= n & n <= len(menu):
+                self.price_sum = self.price[n-1]  # 선택 음료의 가격
+        
+            # 메뉴판에 없는 번호일 때
+            else:  
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+        # 음료 온도 물어보기
+        t = 0  # 기본값을 넣어주고
+        while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+            t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+            # 문제 2-3. 음료의 온도에 따라 temp 변수를 "HOT" 또는 "ICE"로 지정하세요.   
+            # 힌트: if문을 활용해보세요.        
+            if t == 1:
+                self.temp = "HOT"
+            elif t == 2:
+                self.temp = "ICE"
+            else:    
+                print("1과 2 중 하나를 입력하세요.\n")
+        # 문제 2-2의 답을 입력하세요. 
+        print('주문 음료', self.temp, self.menu[n-1], ' : ', self.price_sum, '원')  # 온도 속성을 추가한 주문 결과 출력
+```
+
+
+```python
+# 아이스 초코라떼 주문해보기  
+a = Kiosk()  # 객체 생성
+a.menu_print()  # 메뉴 출력
+a.menu_select()
+```
+
+    1 americano  :  2000 원
+    2 latte  :  3000 원
+    3 mocha  :  3000 원
+    4 yuza_tea  :  2500 원
+    5 green_tea  :  2500 원
+    6 choco_latte  :  3000 원
+    
+    음료 번호를 입력하세요 : 1
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    주문 음료 ICE americano  :  2000 원
+
+
+
+```python
+# 문제 2-4. 추가 주문       
+# 추가 음료의 온도를 입력받고, 가격 리스트와 주문 리스트, 합계 금액을 업데이트합니다. 
+
+# 주문 메서드
+def menu_select(self):
+    self.order_menu = []  # 주문 리스트
+    self.order_price = []  # 가격 리스트
+
+    n = 0
+    while n < 1 or len(self.menu) < n:
+        n = int(input("음료를 번호를 입력하세요 : "))  # 음료 번호 입력
+
+        # 메뉴판에 있는 음료 번호일 때
+        if 1 <= n & n <= len(self.menu):
+            self.order_price.append(self.price[n-1])  # 가격 리스트에 추가합니다.
+            self.price_sum = self.price[n-1]  # 합계 금액
+        
+        # 메뉴판에 없는 번호일 때
+        else:  
+            print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+    # 음료 온도 물어보기
+    t = 0  # 기본값을 넣어주고
+    while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+        t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+        if t == 1:
+            self.temp = "HOT"
+        elif t == 2:
+            self.temp = "ICE"
+        else:    
+            print("1과 2 중 하나를 입력하세요.\n")
+
+    self.order_menu.append(self.temp + ' ' + self.menu[n-1])  # 주문 리스트에 추가합니다.
+    print(self.temp, self.menu[n-1], ' : ', self.price_sum, '원')   # 온도 속성을 추가한 주문 결과를 출력합니다.
+
+    # 추가 주문 또는 지불
+    while n != 0:   # 지불을 선택하기 전까지 반복합니다.
+        print()  # 줄 바꾸면서
+        n = int(input("추가 주문은 음료 번호를, 지불은 0을 누르세요 : "))  # 추가 주문 또는 지불
+        if n > 0 and n < len(self.menu) + 1: 
+            # 추가 음료 온도 
+            t = 0  # 기본값을 넣어주고
+            while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+                t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+                if t == 1:
+                    self.temp = "HOT"
+                elif t == 2:
+                    self.temp = "ICE"
+                else:    
+                    print("1과 2 중 하나를 입력하세요.\n")
+
+            self.order_menu.append(self.temp + ' ' + self.menu[n-1])  # 주문 리스트에 추가합니다.
+            self.order_price.append(self.price[n-1])  # 가격 리스트에 추가합니다.
+            self.price_sum += self.price[n-1]  # 합계 금액 업데이트
+
+            print('추가 주문 음료', self.temp, self.menu[n-1], ':', self.price[n-1], '원\n', '합계 : ', self.price_sum, '원')
+        else:
+            if n == 0 :  # 지불을 입력하면
+                print("주문이 완료되었습니다.")
+                print(self.order_menu, self.order_price)  # 확인을 위한 리스트를 출력합니다.
+            else:  # 없는 번호를 입력할 때
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+        t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+        # 문제 2-3의 답을 입력하세요. 
+        t = 0  # 기본값을 넣어주고
+    while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+            t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+            if t == 1:
+                self.temp = "HOT"
+            elif t == 2:
+                self.temp = "ICE"
+            else:    
+                print("1과 2 중 하나를 입력하세요.\n")
+
+    self.order_menu.append(self.temp + ' ' + self.menu[n-1])  # 주문 리스트에 추가합니다.
+    # 문제 2-2의 답을 입력하세요. 
+    print(self.temp, self.menu[n-1], ' : ', self.price_sum, '원')   # 온도 속성을 추가한 주문 결과를 출력합니다.
+
+    # 추가 주문 또는 지불
+    while n != 0:   # 지불을 선택하기 전까지 반복합니다.
+        print()  # 줄 바꾸면서
+
+        n = int(input("추가 주문은 음료 번호를, 지불은 0을 누르세요 : "))  # 추가 주문 또는 지불
+        if n > 0 and n < len(self.menu) + 1: 
+            # 추가 음료 온도 
+            # 문제 2-4. 추가 음료의 온도를 입력받고, 가격 리스트, 주문 리스트, 합계 금액을 업데이트해보세요.
+            t = 0  # 기본값을 넣어주고
+    while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+                    t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+                    if t == 1:
+                        self.temp = "HOT"
+                    elif t == 2:
+                        self.temp = "ICE"
+                    else:    
+                        print("1과 2 중 하나를 입력하세요.\n")
+
+    self.order_menu.append(self.temp + ' ' + self.menu[n-1])  # 주문 리스트에 추가합니다.
+    self.order_price.append(self.price[n-1])  # 가격 리스트에 추가합니다.
+    self.price_sum += self.price[n-1]  # 합계 금액 업데이트
+
+    print('추가 주문 음료', self.temp, self.menu[n-1], ':', self.price[n-1], '원\n', '합계 : ', self.price_sum, '원')
+    if n == 0:  # 지불을 입력하면
+        print("주문이 완료되었습니다.")
+        print(self.order_menu, self.order_price)  # 확인을 위한 리스트를 출력합니다.
+    else:  # 없는 번호를 입력할 때
+            print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+    
+```
+
+
+```python
+Kiosk.menu_select = menu_select
+```
+
+
+```python
+# 5가지 이상의 음료를 주문하고 리스트 확인하기 
+a = Kiosk()  # 객체 생성
+a.menu_print()  # 메뉴 출력
+a.menu_select()  # 주문
+```
+
+    1 americano  :  2000 원
+    2 latte  :  3000 원
+    3 mocha  :  3000 원
+    4 yuza_tea  :  2500 원
+    5 green_tea  :  2500 원
+    6 choco_latte  :  3000 원
+    음료를 번호를 입력하세요 : 1
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    ICE americano  :  2000 원
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 3
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    추가 주문 음료 ICE mocha : 3000 원
+     합계 :  5000 원
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 3
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 2
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    추가 주문 음료 ICE latte : 3000 원
+     합계 :  8000 원
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 1
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 2
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    추가 주문 음료 ICE latte : 3000 원
+     합계 :  11000 원
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 1
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    추가 주문 음료 ICE americano : 2000 원
+     합계 :  13000 원
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 0
+    주문이 완료되었습니다.
+    ['ICE americano', 'ICE mocha', 'ICE latte', 'ICE latte', 'ICE americano'] [2000, 3000, 3000, 3000, 2000]
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 1
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 1
+    HOT choco_latte  :  13000 원
+    추가 주문 음료 HOT choco_latte : 3000 원
+     합계 :  16000 원
+    주문이 완료되었습니다.
+    ['ICE americano', 'ICE mocha', 'ICE latte', 'ICE latte', 'ICE americano', 'HOT choco_latte', 'HOT choco_latte'] [2000, 3000, 3000, 3000, 2000, 3000]
+
+
+
+```python
+def process_payment(payment_method):
+    if payment_method == 'cash' or payment_method == 1:
+        return '직원을 호출하겠습니다.'
+    elif payment_method == 'card' or payment_method == 2:
+        return 'IC칩 방향에 맞게 카드를 꽂아주세요.'
+    else:
+        return '유효하지 않은 결제 방법입니다.'
+
+
+```
+
+
+```python
+# 테스트
+print(process_payment('cash'))  # '직원을 호출하겠습니다.'
+print(process_payment(2))  # 'IC칩 방향에 맞게 카드를 꽂아주세요.'
+```
+
+    직원을 호출하겠습니다.
+    IC칩 방향에 맞게 카드를 꽂아주세요.
+
+
+
+```python
+# 문제 3-1. 지불 메서드
+# 위의 설명을 참고하여 pay 함수를 구현합니다. 
+
+def pay(self):
+    total = sum(self.order_price)  # 주문한 항목의 가격을 모두 더합니다.
+    print("총 금액은", total, "원입니다.")  # 총 금액을 출력합니다.
+
+```
+
+
+```python
+Kiosk.pay = pay
+```
+
+
+```python
+a = Kiosk()  # 객체 생성 
+a.menu_print()  # 메뉴 출력
+a.menu_select()  # 주문
+a.pay()  # 지불
+```
+
+    1 americano  :  2000 원
+    2 latte  :  3000 원
+    3 mocha  :  3000 원
+    4 yuza_tea  :  2500 원
+    5 green_tea  :  2500 원
+    6 choco_latte  :  3000 원
+    음료를 번호를 입력하세요 : 1
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    ICE americano  :  2000 원
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 2
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    추가 주문 음료 ICE latte : 3000 원
+     합계 :  5000 원
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 3
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 2
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 4
+    1과 2 중 하나를 입력하세요.
+    
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    추가 주문 음료 ICE latte : 3000 원
+     합계 :  8000 원
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 5
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 2
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    추가 주문 음료 ICE latte : 3000 원
+     합계 :  11000 원
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    
+    추가 주문은 음료 번호를, 지불은 0을 누르세요 : 0
+    주문이 완료되었습니다.
+    ['ICE americano', 'ICE latte', 'ICE latte', 'ICE latte'] [2000, 3000, 3000, 3000]
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 2
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 1
+    HOT choco_latte  :  11000 원
+    추가 주문 음료 HOT choco_latte : 3000 원
+     합계 :  14000 원
+    주문이 완료되었습니다.
+    ['ICE americano', 'ICE latte', 'ICE latte', 'ICE latte', 'HOT choco_latte', 'HOT choco_latte'] [2000, 3000, 3000, 3000, 3000]
+    총 금액은 14000 원입니다.
+
+
+
+```python
+menu_temp = ['HOT americano', 'ICE latte', 'ICE mocha', 'ICE choco_latte'] 
+price_temp = [2000, 3000, 3000, 3000] 
+
+# 외곽
+print('⟝' + '-' * 30 + '⟞')
+for i in range(5):
+    print('|' + ' ' * 31 + '|')
+
+# 주문 상품명 : 해당 금액
+for i in range(len(menu_temp)):
+    print(menu_temp[i], ' : ', price_temp[i])
+
+print('합계 금액 :', sum(price_temp))
+
+# 외곽
+for i in range(5):
+    print('|' + ' ' * 31+ '|')
+print('⟝' + '-' * 30 + '⟞')
+```
+
+    ⟝------------------------------⟞
+    |                               |
+    |                               |
+    |                               |
+    |                               |
+    |                               |
+    HOT americano  :  2000
+    ICE latte  :  3000
+    ICE mocha  :  3000
+    ICE choco_latte  :  3000
+    합계 금액 : 11000
+    |                               |
+    |                               |
+    |                               |
+    |                               |
+    |                               |
+    ⟝------------------------------⟞
+
+
+
+```python
+# 문제 3-2. 주문표 
+# 위의 주문표 코드를 참고하여 table() 메서드를 작성해 봅니다. 
+
+def table(self):
+    print("주문표")
+    print("--------------------")
+    for i in range(len(self.order_menu)):
+        print(self.order_menu[i], ':', self.order_price[i], '원')
+    print("--------------------")
+    print("총 금액 :", sum(self.order_price), "원")
+
+```
+
+
+```python
+# 문제 3-3. 클래스 업데이트  
+# 앞에서 구현했던 메서드들을 Kiosk 클래스에 추가합니다. 직접 코드를 작성해 보세요! 
+
+class Kiosk:
+    def __init__(self):
+        self.menu = ['americano', 'latte', 'mocha', 'yuza_tea', 'green_tea', 'choco_latte']
+        self.price = [2000, 3000, 3000, 2500, 2500, 3000]
+        self.order_menu = []  # 주문 리스트
+        self.order_price = []  # 가격 리스트
+
+    # 메뉴 출력 메서드
+    def menu_print(self):
+        for i in range(len(self.menu)):
+            print(i + 1, self.menu[i], ' : ', self.price[i], '원')
+
+    # 주문 메서드
+    def menu_select(self):
+        n = 0
+        while n < 1 or len(self.menu) < n:
+            n = int(input("음료를 번호를 입력하세요 : "))  # 음료 번호 입력
+
+            # 메뉴판에 있는 음료 번호일 때
+            if 1 <= n & n <= len(self.menu):
+                self.order_price.append(self.price[n-1])  # 가격 리스트에 추가합니다.
+                self.price_sum = self.price[n-1]  # 합계 금액
+
+            # 메뉴판에 없는 번호일 때
+            else:  
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+        # 음료 온도 물어보기
+        t = 0  # 기본값을 넣어주고
+        while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+            t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+            if t == 1:
+                self.temp = "HOT"
+            elif t == 2:
+                self.temp = "ICE"
+            else:    
+                print("1과 2 중 하나를 입력하세요.\n")
+
+        self.order_menu.append(self.temp + ' ' + self.menu[n-1])  # 주문 리스트에 추가합니다.
+        print(self.temp, self.menu[n-1], ' : ', self.price_sum, '원')   # 온도 속성을 추가한 주문 결과를 출력합니다.
+
+    # 지불
+    def pay(self):
+        total = sum(self.order_price)  # 주문한 항목의 가격을 모두 더합니다.
+        print("총 금액은", total, "원입니다.")  # 총 금액을 출력합니다.
+
+    # 주문서 출력 
+    def table(self):
+        print("주문표")
+        print("--------------------")
+        for i in range(len(self.order_menu)):
+            print(self.order_menu[i], ':', self.order_price[i], '원')
+        print("--------------------")
+        print("총 금액 :", sum(self.order_price), "원")
+
+```
+
+
+```python
+a = Kiosk()  # 객체 생성 
+```
+
+
+```python
+a.menu_print()  # 메뉴 출력
+```
+
+    1 americano  :  2000 원
+    2 latte  :  3000 원
+    3 mocha  :  3000 원
+    4 yuza_tea  :  2500 원
+    5 green_tea  :  2500 원
+    6 choco_latte  :  3000 원
+
+
+
+```python
+a.menu_select()  # 주문
+```
+
+    음료를 번호를 입력하세요 : 3
+    HOT 음료는 1을, ICE 음료는 2를 입력하세요 : 1
+    HOT mocha  :  3000 원
+
+
+
+```python
+a.pay()  # 지불
+```
+
+    총 금액은 3000 원입니다.
+
+
+
+```python
+a.table()  # 주문표 출력
+```
+
+    주문표
+    --------------------
+    HOT mocha : 3000 원
+    --------------------
+    총 금액 : 3000 원
+
+
+
+```python
+# 1. 메뉴와 가격이 이차원 리스트로 구성하기 (메뉴와 가격정보 한 곳에서 관리 목적)
+
+class Kiosk:
+    def __init__(self):
+        self.menu = [['americano', 2000], ['latte', 3000], ['mocha', 3000], ['yuza_tea', 2500], ['green_tea', 2500], ['choco_latte', 3000]]
+        self.order = []  # 주문 리스트
+
+    # 메뉴 출력 메서드
+    def menu_print(self):
+        for i in range(len(self.menu)):
+            print(i + 1, self.menu[i][0], ' : ', self.menu[i][1], '원')
+
+    # 주문 메서드
+    def menu_select(self):
+        n = 0
+        while n < 1 or len(self.menu) < n:
+            n = int(input("음료를 번호를 입력하세요 : "))  # 음료 번호 입력
+
+            # 메뉴판에 있는 음료 번호일 때
+            if 1 <= n & n <= len(self.menu):
+                self.price_sum = self.menu[n-1][1]  # 합계 금액
+
+            # 메뉴판에 없는 번호일 때
+            else:  
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+        # 음료 온도 물어보기
+        t = 0  # 기본값을 넣어주고
+        while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+            t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+            if t == 1:
+                self.temp = "HOT"
+            elif t == 2:
+                self.temp = "ICE"
+            else:    
+                print("1과 2 중 하나를 입력하세요.\n")
+
+        self.order.append([self.temp + ' ' + self.menu[n-1][0], self.price_sum])  # 주문 리스트에 추가합니다.
+        print(self.temp, self.menu[n-1][0], ' : ', self.price_sum, '원')   # 온도 속성을 추가한 주문 결과를 출력합니다.
+
+    # 지불
+    def pay(self):
+        total = sum(order[1] for order in self.order)  # 주문한 항목의 가격을 모두 더합니다.
+        print("총 금액은", total, "원입니다.")  # 총 금액을 출력합니다.
+
+    # 주문서 출력 
+    def table(self):
+        print("주문표")
+        print("--------------------")
+        for order in self.order:
+            print(order[0], ':', order[1], '원')
+        print("--------------------")
+        print("총 금액 :", sum(order[1] for order in self.order), "원")
+
+```
+
+
+```python
+# 2. enumerate() 함수를 사용하여 메뉴 항목을 인덱스와 함께 출력하기 (start=1 인자를 사용하여 인덱스가 1부터 시작)
+  
+
+class Kiosk:
+    def __init__(self):
+        self.menu = [['americano', 2000], ['latte', 3000], ['mocha', 3000], ['yuza_tea', 2500], ['green_tea', 2500], ['choco_latte', 3000]]
+        self.order = []  # 주문 리스트
+
+    # 메뉴 출력 메서드
+    def menu_print(self):
+        for i, item in enumerate(self.menu, start=1):
+            print(i, item[0], ' : ', item[1], '원')
+
+    # 주문 메서드
+    def menu_select(self):
+        n = 0
+        while n < 1 or len(self.menu) < n:
+            n = int(input("음료를 번호를 입력하세요 : "))  # 음료 번호 입력
+
+            # 메뉴판에 있는 음료 번호일 때
+            if 1 <= n & n <= len(self.menu):
+                self.price_sum = self.menu[n-1][1]  # 합계 금액
+
+            # 메뉴판에 없는 번호일 때
+            else:  
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+        # 음료 온도 물어보기
+        t = 0  # 기본값을 넣어주고
+        while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+            t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+            if t == 1:
+                self.temp = "HOT"
+            elif t == 2:
+                self.temp = "ICE"
+            else:    
+                print("1과 2 중 하나를 입력하세요.\n")
+
+        self.order.append([self.temp + ' ' + self.menu[n-1][0], self.price_sum])  # 주문 리스트에 추가합니다.
+        print(self.temp, self.menu[n-1][0], ' : ', self.price_sum, '원')   # 온도 속성을 추가한 주문 결과를 출력합니다.
+
+    # 지불
+    def pay(self):
+        total = sum(order[1] for order in self.order)  # 주문한 항목의 가격을 모두 더합니다.
+        print("총 금액은", total, "원입니다.")  # 총 금액을 출력합니다.
+
+    # 주문서 출력 
+    def table(self):
+        print("주문표")
+        print("--------------------")
+        for order in self.order:
+            print(order[0], ':', order[1], '원')
+        print("--------------------")
+        print("총 금액 :", sum(order[1] for order in self.order), "원")
+
+```
+
+
+```python
+# 3. datetime 모듈의 datetime.now() 함수를 사용하여 현재 시간을 주문 리스트에 추가하기
+
+import datetime
+
+class Kiosk:
+    def __init__(self):
+        self.menu = [['americano', 2000], ['latte', 3000], ['mocha', 3000], ['yuza_tea', 2500], ['green_tea', 2500], ['choco_latte', 3000]]
+        self.order = []  # 주문 리스트
+
+    # 메뉴 출력 메서드
+    def menu_print(self):
+        for i, item in enumerate(self.menu, start=1):
+            print(i, item[0], ' : ', item[1], '원')
+
+    # 주문 메서드
+    def menu_select(self):
+        n = 0
+        while n < 1 or len(self.menu) < n:
+            n = int(input("음료를 번호를 입력하세요 : "))  # 음료 번호 입력
+
+            # 메뉴판에 있는 음료 번호일 때
+            if 1 <= n & n <= len(self.menu):
+                self.price_sum = self.menu[n-1][1]  # 합계 금액
+
+            # 메뉴판에 없는 번호일 때
+            else:  
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+        # 음료 온도 물어보기
+        t = 0  # 기본값을 넣어주고
+        while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+            t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+            if t == 1:
+                self.temp = "HOT"
+            elif t == 2:
+                self.temp = "ICE"
+            else:    
+                print("1과 2 중 하나를 입력하세요.\n")
+
+        self.order.append([self.temp + ' ' + self.menu[n-1][0], self.price_sum, datetime.datetime.now()])  # 주문 리스트에 추가합니다.
+        print(self.temp, self.menu[n-1][0], ' : ', self.price_sum, '원')   # 온도 속성을 추가한 주문 결과를 출력합니다.
+
+    # 지불
+    def pay(self):
+        total = sum(order[1] for order in self.order)  # 주문한 항목의 가격을 모두 더합니다.
+        print("총 금액은", total, "원입니다.")  # 총 금액을 출력합니다.
+
+    # 주문서 출력 
+    def table(self):
+        print("주문표")
+        print("--------------------")
+        for order in self.order:
+            print(order[0], ':', order[1], '원', '주문 시간:', order[2])
+        print("--------------------")
+        print("총 금액 :", sum(order[1] for order in self.order), "원")
+
+```
+
+
+```python
+# 4. 데코레이터로 주문표 양식 출력하기 (Print_order_form이라는 데코레이터를 정의 및 table 메서드에 적용 후 주문표 양식 출력)
+
+import datetime
+
+def print_order_form(func):
+    def wrapper(*args, **kwargs):
+        print("주문표")
+        print("--------------------")
+        func(*args, **kwargs)
+        print("--------------------")
+    return wrapper
+
+class Kiosk:
+    def __init__(self):
+        self.menu = [['americano', 2000], ['latte', 3000], ['mocha', 3000], ['yuza_tea', 2500], ['green_tea', 2500], ['choco_latte', 3000]]
+        self.order = []  # 주문 리스트
+
+    # 메뉴 출력 메서드
+    def menu_print(self):
+        for i, item in enumerate(self.menu, start=1):
+            print(i, item[0], ' : ', item[1], '원')
+
+    # 주문 메서드
+    def menu_select(self):
+        n = 0
+        while n < 1 or len(self.menu) < n:
+            n = int(input("음료를 번호를 입력하세요 : "))  # 음료 번호 입력
+
+            # 메뉴판에 있는 음료 번호일 때
+            if 1 <= n & n <= len(self.menu):
+                self.price_sum = self.menu[n-1][1]  # 합계 금액
+
+            # 메뉴판에 없는 번호일 때
+            else:  
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+        # 음료 온도 물어보기
+        t = 0  # 기본값을 넣어주고
+        while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+            t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+            if t == 1:
+                self.temp = "HOT"
+            elif t == 2:
+                self.temp = "ICE"
+            else:    
+                print("1과 2 중 하나를 입력하세요.\n")
+
+        self.order.append([self.temp + ' ' + self.menu[n-1][0], self.price_sum, datetime.datetime.now()])  # 주문 리스트에 추가합니다.
+        print(self.temp, self.menu[n-1][0], ' : ', self.price_sum, '원')   # 온도 속성을 추가한 주문 결과를 출력합니다.
+
+    # 지불
+    def pay(self):
+        total = sum(order[1] for order in self.order)  # 주문한 항목의 가격을 모두 더합니다.
+        print("총 금액은", total, "원입니다.")  # 총 금액을 출력합니다.
+
+    # 주문서 출력 
+    @print_order_form
+    def table(self):
+        for order in self.order:
+            print(order[0], ':', order[1], '원', '주문 시간:', order[2])
+        print("총 금액 :", sum(order[1] for order in self.order), "원")
+
+```
+
+
+```python
+# 5. 할인 및 쿠폰 사용하기 (input_discount_code 메서드를 추가하여 고객이 직접 할인 코드를 입력할 수 있도록 구현)
+
+import datetime
+
+def print_order_form(func):
+    def wrapper(*args, **kwargs):
+        print("주문표")
+        print("--------------------")
+        func(*args, **kwargs)
+        print("--------------------")
+    return wrapper
+
+class Kiosk:
+    def __init__(self):
+        self.menu = [['americano', 2000], ['latte', 3000], ['mocha', 3000], ['yuza_tea', 2500], ['green_tea', 2500], ['choco_latte', 3000]]
+        self.order = []  # 주문 리스트
+
+    # 메뉴 출력 메서드
+    def menu_print(self):
+        for i, item in enumerate(self.menu, start=1):
+            print(i, item[0], ' : ', item[1], '원')
+
+    # 주문 메서드
+    def menu_select(self):
+        n = 0
+        while n < 1 or len(self.menu) < n:
+            n = int(input("음료를 번호를 입력하세요 : "))  # 음료 번호 입력
+
+            # 메뉴판에 있는 음료 번호일 때
+            if 1 <= n & n <= len(self.menu):
+                self.price_sum = self.menu[n-1][1]  # 합계 금액
+
+            # 메뉴판에 없는 번호일 때
+            else:  
+                print("없는 메뉴입니다. 다시 주문해 주세요.")
+
+        # 음료 온도 물어보기
+        t = 0  # 기본값을 넣어주고
+        while t != 1 and t != 2:  # 1이나 2를 입력할 때까지 물어보기
+            t= int(input("HOT 음료는 1을, ICE 음료는 2를 입력하세요 : "))
+            if t == 1:
+                self.temp = "HOT"
+            elif t == 2:
+                self.temp = "ICE"
+            else:    
+                print("1과 2 중 하나를 입력하세요.\n")
+
+        self.order.append([self.temp + ' ' + self.menu[n-1][0], self.price_sum, datetime.datetime.now()])  # 주문 리스트에 추가합니다.
+        print(self.temp, self.menu[n-1][0], ' : ', self.price_sum, '원')   # 온도 속성을 추가한 주문 결과를 출력합니다.
+
+    # 지불
+    def pay(self):
+        total = sum(order[1] for order in self.order)  # 주문한 항목의 가격을 모두 더합니다.
+        print("총 금액은", total, "원입니다.")  # 총 금액을 출력합니다.
+
+    # 주문서 출력 
+    @print_order_form
+    def table(self):
+        for order in self.order:
+            print(order[0], ':', order[1], '원', '주문 시간:', order[2])
+        print("총 금액 :", sum(order[1] for order in self.order), "원")
+
+```
+
+
+```python
+
+
+
+```
+
+
+```python
+### (1) 사각형 넓이 구하기
+```
+
+
+```python
+class Square:
+    def __init__(self):  # 생성자__init__의 매개변수의 첫번째는 self여야 합니다. 
+        self.square = int(input('넓이를 구하고 싶은 사각형의 숫자를 써주세요.\n 1.직사각형 2.평행사변형 3.사다리꼴 \n >>>'))  # 입력값을 int로 묶어야 합니다.
+
+        if self.square == 1:
+            print('직사각형 함수는 rect()입니다.')  # Square 클래스에 rect() 메서드를 추가합니다. 
+
+        elif self.square == 2:
+            print('평행사변형 함수는 par()입니다.')  # Square 클래스에 par() 메서드를 추가합니다.  
+        
+        elif self.square == 3:
+            print('사다리꼴 함수는 trape()입니다.')  # Square 클래스에 trape() 메서드를 추가합니다. 
+        
+        else:
+            print('1, 2, 3 중에서 다시 입력해주세요')
+```
+
+
+```python
+# split()함수 예시 2
+a, b, c = '모.두.연'.split('.')
+print(b)
+```
+
+    두
+
+
+
+```python
+가로, 세로 = input('가로, 세로를 입력하세요. 예시 : 가로,세로').split(',')
+print(가로, 세로)
+```
+
+    가로, 세로를 입력하세요. 예시 : 가로,세로가로, 세로
+    가로  세로
+
+
+
+```python
+type(가로)
+```
+
+
+
+
+    str
+
+
+
+
+```python
+# split()의 결과는 리스트
+a = '모.두.연'.split('.')
+print(a)
+```
+
+    ['모', '두', '연']
+
+
+
+```python
+# 3,4를 입력해보세요
+가로, 세로 = map(int,input('가로, 세로를 입력하세요. 예시 : 가로,세로').split(','))
+print(가로, type(가로))
+```
+
+    가로, 세로를 입력하세요. 예시 : 가로,세로3, 4
+    3 <class 'int'>
+
+
+
+```python
+def rect(self):  # 직사각형의 넓이를 구하는 메서드
+    width, vertical = map(int, input('가로, 세로를 입력하세요. 예시 : 가로,세로\n >>>').split(','))  #가로, 세로를 입력받는 코드
+    area = area = width * vertical  # 넓이를 구하는 부분
+    result = '직사각형의 넓이는 : ' + str(area)
+    return result
+```
+
+
+```python
+# 클래스 만들기 
+class Square:
+    def __init__(self):
+        self.square = int(input('넓이를 구하고 싶은 사각형의 숫자를 써주세요.\n 1.직사각형 2.평행사변형 3.사다리꼴 \n >>>'))
+
+        if self.square == 1:
+            print('직사각형 함수는 rect()입니다.')
+
+        elif self.square == 2:
+            print('평행사변형 함수는 par()입니다.')
+        
+        elif self.square == 3:
+            print('사다리꼴 함수는 trape()입니다.')
+        
+        else:
+            print('1, 2, 3 중에서 다시 입력해주세요')
+
+
+    def rect(self):
+        width, vertical = map(int, input('가로, 세로를 입력하세요. 예시 : 가로,세로\n >>>').split(','))
+        area = width * vertical
+        result = '직사각형의 넓이는 : ' + str(area)
+        return result
+```
+
+
+```python
+# 객체 만들기 
+a = Square()  # 1 입력하기
+```
+
+    넓이를 구하고 싶은 사각형의 숫자를 써주세요.
+     1.직사각형 2.평행사변형 3.사다리꼴 
+     >>>1
+    직사각형 함수는 rect()입니다.
+
+
+
+```python
+# rect() 메서드 써보기
+a.rect()
+```
+
+    가로, 세로를 입력하세요. 예시 : 가로,세로
+     >>>3, 4
+
+
+
+
+
+    '직사각형의 넓이는 : 12'
+
+
+
+
+```python
+# 문제 1. 평행사변형과 사다리꼴의 넓이를 구하는 메서드를 구현해봅시다. 
+
+# 평행사변형 메서드
+def par(self):
+    base, height = map(int, input('밑변과 높이를 입력하세요. 예시 : 밑변,높이\n >>>').split(','))  # 밑변과 높이를 입력받는 코드
+    area = base * height  # 넓이를 구하는 부분
+    result = '평행사변형의 넓이는 : ' + str(area)
+    return result
+
+
+# 사다리꼴 메서드
+def trape(self):
+    base1, base2, height = map(int, input('밑변1, 밑변2, 높이를 입력하세요. 예시 : 밑변1,밑변2,높이\n >>>').split(','))  # 밑변1, 밑변2, 높이를 입력받는 코드
+    area = (base1 + base2) / 2 * height  # 넓이를 구하는 부분
+    result = '사다리꼴의 넓이는 : ' + str(area)
+    return result
+```
+
+
+```python
+# 사각형 넓이를 구하는 클래스 완성!
+class Square:
+    def __init__(self):
+        self.square = int(input('넓이를 구하고 싶은 사각형의 숫자를 써주세요.\n 1.직사각형 2.평행사변형 3.사다리꼴 \n >>>'))
+
+        if self.square == 1:
+            print('직사각형 함수는 rect()입니다.')
+
+        elif self.square == 2:
+            print('평행사변형 함수는 par()입니다.')
+        
+        elif self.square == 3:
+            print('사다리꼴 함수는 trape()입니다.')
+        
+        else:
+            print('1, 2, 3 중에서 다시 입력해주세요')
+
+    def rect(self):
+        width, vertical = map(int, input('가로, 세로를 입력하세요. 예시 : 가로,세로\n >>>').split(','))
+        area = width * vertical
+        result = '직사각형의 넓이는 : ' + str(area)
+        return result
+
+    def par(self):
+        base, height = map(int, input('밑변과 높이를 입력하세요. 예시 : 밑변,높이\n >>>').split(','))
+        area = base * height
+        result = '평행사변형의 넓이는 : ' + str(area)
+        return result
+
+    def trape(self):
+        base1, base2, height = map(int, input('밑변1, 밑변2, 높이를 입력하세요. 예시 : 밑변1,밑변2,높이\n >>>').split(','))
+        area = (base1 + base2) / 2 * height
+        result = '사다리꼴의 넓이는 : ' + str(area)
+        return result
+
+a = Square()  # 객체 생성 & 2, 3을 각각 입력해 봅시다.
+```
+
+    넓이를 구하고 싶은 사각형의 숫자를 써주세요.
+     1.직사각형 2.평행사변형 3.사다리꼴 
+     >>>2
+    평행사변형 함수는 par()입니다.
+
+
+
+```python
+# 평형사변형의 넓이
+a.par()  # 3,2를 입력했을 때 넓이가 6이 나와야 합니다.
+```
+
+    밑변과 높이를 입력하세요. 예시 : 밑변,높이
+     >>>3, 2
+
+
+
+
+
+    '평행사변형의 넓이는 : 6'
+
+
+
+
+```python
+# 사다리꼴의 넓이
+a.trape()  # 3,2,1 을 입력했을 때 넓이가 2.5이 나와야 합니다.
+```
+
+    밑변1, 밑변2, 높이를 입력하세요. 예시 : 밑변1,밑변2,높이
+     >>>3,2,1
+
+
+
+
+
+    '사다리꼴의 넓이는 : 2.5'
+
+
+
