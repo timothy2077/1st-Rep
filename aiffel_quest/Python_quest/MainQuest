@@ -1,0 +1,1781 @@
+{
+  "nbformat": 4,
+  "nbformat_minor": 0,
+  "metadata": {
+    "colab": {
+      "provenance": [],
+      "authorship_tag": "ABX9TyNWUOcyvqLkPlWrGu5m2iDd",
+      "include_colab_link": true
+    },
+    "kernelspec": {
+      "name": "python3",
+      "display_name": "Python 3"
+    },
+    "language_info": {
+      "name": "python"
+    }
+  },
+  "cells": [
+    {
+      "cell_type": "markdown",
+      "metadata": {
+        "id": "view-in-github",
+        "colab_type": "text"
+      },
+      "source": [
+        "<a href=\"https://colab.research.google.com/github/timothy2077/1st-Rep/blob/master/aiffel_quest/Python_quest/MainQuest\" target=\"_parent\"><img src=\"https://colab.research.google.com/assets/colab-badge.svg\" alt=\"Open In Colab\"/></a>"
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "#메인 퀘스트 1번: 은행계좌 만들기"
+      ],
+      "metadata": {
+        "id": "n4qk73PvzihH"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q1. Account 클래스 (새로운 계좌의 생성 및 계좌의 정보를 출력하며 출력된 정보에는 은행 이름, 예금주, 계좌 번호, 그리고 잔액이 포함이 되며 계좌 번호는 매번 랜덤하게 생성)"
+      ],
+      "metadata": {
+        "id": "GuZy6m_V2Fr1"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account: # 클래스 변수로 계좌 개수를 초기화\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔액: {}'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, self.balance\n",
+        "        )\n"
+      ],
+      "metadata": {
+        "id": "iKSnOsCLzmWF"
+      },
+      "execution_count": 223,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "account = Account('김원영', 10000000000)\n",
+        "print(account)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "JobSEWD11cK7",
+        "outputId": "3935db0f-7ab2-4632-c063-8bbbfcca3c08"
+      },
+      "execution_count": 224,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 김원영, 계좌번호: 821-12-708343, 잔액: 10000000000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q2.  클래스 변수 (Account 클래스에서 생성된 계좌 객체의 수를 추적하고 클래스 변수는 클래스의 모든 인스턴스에서 공유되는 것을 사용하여 생성된 계좌의 수를 추적)\n"
+      ],
+      "metadata": {
+        "id": "2_wgk_wD2X-m"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "\n",
+        "        # 새 계좌가 생성될 때마다 계좌 개수를 증가\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_count(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔액: {}'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, self.balance\n",
+        "        )\n"
+      ],
+      "metadata": {
+        "id": "jQBc1qih2kA0"
+      },
+      "execution_count": 225,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q3. 클래스 변수 출력 (두 개의 계좌를 생성하고 생성된 계좌의 수를 출력하며 계좌가 생성될 때마다 account_count가 증가)"
+      ],
+      "metadata": {
+        "id": "YNdMP2KGOehw"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "\n",
+        "\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_num(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔액: {}'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, self.balance\n",
+        "        )\n",
+        "\n",
+        "# Account 클래스로부터 두 개의 인스턴스를 생성\n",
+        "account1 = Account('김정은', 1000000)\n",
+        "account2 = Account('차정은', 2000000)\n",
+        "\n",
+        "# 생성된 계좌의 개수를 출력\n",
+        "print(Account.get_account_num())\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "c5Tzg_HAOZaU",
+        "outputId": "557d84cd-f1a6-41a7-f830-e49df258d678"
+      },
+      "execution_count": 226,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "2\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q4.  입금 메서드 (deposit 메서드를 추가하여 Account 클래스에 입금기능 추가)\n"
+      ],
+      "metadata": {
+        "id": "ENvfXSE-5PhF"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "\n",
+        "\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    def deposit(self, amount):\n",
+        "        if amount >= 1:\n",
+        "            self.balance += amount\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_num(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔액: {}'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, self.balance\n",
+        "        )\n"
+      ],
+      "metadata": {
+        "id": "zUC1MHK_7JJQ"
+      },
+      "execution_count": 227,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "account = Account('김정은', 1000000)\n",
+        "account.deposit(500000) # 계좌에 500,000원을 입금한 후 계좌의 모든 정보를 함께 출력\n",
+        "print(account)"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "IfaFw2Vc7mI1",
+        "outputId": "19b905d9-e0cc-4e61-87e4-efb53c113708"
+      },
+      "execution_count": 228,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 김정은, 계좌번호: 360-13-463660, 잔액: 1500000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "account = Account('차정은', 2000000)\n",
+        "account.deposit(0.5)\n",
+        "print(account)  # 입금액이 1원 미만인 경우에는 입금을 허용하지 않음"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "bfoAdqKT-fJE",
+        "outputId": "8475ed92-4fc9-4e3a-b648-076a03a72497"
+      },
+      "execution_count": 229,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 차정은, 계좌번호: 919-60-101300, 잔액: 2000000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q5.  출금 메서드 (withdraw 메서드를 추가하여 Account 클래스에 출금기능 추가)\n"
+      ],
+      "metadata": {
+        "id": "dOac5h6V8fHu"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "\n",
+        "\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    def deposit(self, amount):\n",
+        "        if amount >= 1:\n",
+        "            self.balance += amount\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    def withdraw(self, amount):\n",
+        "        if self.balance >= amount:\n",
+        "            self.balance -= amount\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_num(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔액: {}'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, self.balance\n",
+        "        )\n"
+      ],
+      "metadata": {
+        "id": "-4Fip5Q-8lhX"
+      },
+      "execution_count": 230,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "account = Account('김정은', 1000000)\n",
+        "account.withdraw(500000) # 계좌에서 500,000원을 출금한 후 계좌의 모든 정보를 함께 출력\n",
+        "print(account)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "c-9LjDH29UuC",
+        "outputId": "ae404c5c-252a-4694-d2cc-9c9442876da6"
+      },
+      "execution_count": 231,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 김정은, 계좌번호: 106-26-495829, 잔액: 500000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "account = Account('차정은', 2000000)\n",
+        "account.withdraw(3000000) # 출금액이 계좌의 잔액 이상인 경우에는 출금을 허용하지 않음\n",
+        "print(account)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "uhDarwiP9gMT",
+        "outputId": "d4ac0875-2066-4c8a-86d0-e2ab48ffa657"
+      },
+      "execution_count": 232,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 차정은, 계좌번호: 683-34-830469, 잔액: 2000000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "account = Account('차정은', 2000000)\n",
+        "account.withdraw(500000) # 계좌에서 500,000원을 출금한 후 계좌의 모든 정보를 함께 출력\n",
+        "print(account)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "QV0Jg6o--CDi",
+        "outputId": "79fedfd1-d201-4deb-f395-05688197bfc3"
+      },
+      "execution_count": 233,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 차정은, 계좌번호: 948-73-198403, 잔액: 1500000\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q6.  정보 출력 메서드 (display_info 메서드 추가 및 숫자 세자리씩 쉼표 출력)"
+      ],
+      "metadata": {
+        "id": "K1OqJqVy_0Vy"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    def deposit(self, amount):\n",
+        "        if amount >= 1:\n",
+        "            self.balance += amount\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    def withdraw(self, amount):\n",
+        "        if self.balance >= amount:\n",
+        "            self.balance -= amount\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_num(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def display_info(self):\n",
+        "        balance = format(self.balance, ',')\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔고: {}원'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, balance\n",
+        "        )\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return self.display_info()\n"
+      ],
+      "metadata": {
+        "id": "PNZPuae3B9vS"
+      },
+      "execution_count": 234,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "account = Account('파이썬', 10000) # 예금주명이 '파이썬'인 계좌를 초기 잔고가 10,000원으로 생성\n",
+        "\n",
+        "print(account.display_info()) # 계좌정보 출력"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "QMw1PuukCTJd",
+        "outputId": "4f2a5ca1-735e-4a97-d8b9-83dc325dd0da"
+      },
+      "execution_count": 235,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 파이썬, 계좌번호: 720-93-376479, 잔고: 10,000원\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q7.  이자 지급하기 (입금 횟수가 5회가 될 때마다 잔고의 1%가 이자로 추가)"
+      ],
+      "metadata": {
+        "id": "5F8mUuc-C6dY"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "        self.deposit_count = 0  # 입금 횟수를 추적하는 변수를 추가\n",
+        "\n",
+        "\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    def deposit(self, amount):\n",
+        "        if amount >= 1:\n",
+        "            self.balance += amount\n",
+        "            self.deposit_count += 1  # 입금할 때마다 입금 횟수를 1씩 증가\n",
+        "            if self.deposit_count % 5 == 0:  # 입금 횟수가 5의 배수일 경우\n",
+        "                self.balance *= 1.01  # 잔고에 1%의 이자를 추가\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    def withdraw(self, amount):\n",
+        "        if self.balance >= amount:\n",
+        "            self.balance -= amount\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_num(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def display_info(self):\n",
+        "        balance = format(self.balance, ',')\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔고: {}원'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, balance\n",
+        "        )\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return self.display_info()\n",
+        "\n",
+        "# 예금주명이 '파이썬'인 계좌를 초기 잔고가 10,000원으로 생성\n",
+        "account = Account('파이썬', 10000)\n",
+        "\n",
+        "# 5회 입금을 수행하며 각 회당 입금액은 5000원\n",
+        "for _ in range(5):\n",
+        "    account.deposit(5000)\n",
+        "\n",
+        "# 계좌 정보를 출력\n",
+        "print(account.display_info())\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "C0EQpZ-yD0W1",
+        "outputId": "07e74192-6484-4514-b990-4e26387ace97"
+      },
+      "execution_count": 236,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 파이썬, 계좌번호: 583-44-858116, 잔고: 35,350.0원\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# 예금주명이 '파이썬'인 초기 잔고가 2,000,000원인 계좌를 생성\n",
+        "account = Account('차정은', 2000000)\n",
+        "\n",
+        "# 5회 입금을 수행하며 각 회당 입금액은 5000원\n",
+        "for _ in range(5):\n",
+        "    account.deposit(50000)\n",
+        "\n",
+        "# 계좌 정보를 출력\n",
+        "print(account.display_info())\n",
+        "\n",
+        "# 300,000원을 출금\n",
+        "account.withdraw(300000)\n",
+        "\n",
+        "# 계좌 정보를 출력\n",
+        "print(account.display_info())\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "ngralsSbFS8N",
+        "outputId": "ace2c668-aaab-4e44-eabb-f3af138522f4"
+      },
+      "execution_count": 237,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 차정은, 계좌번호: 851-42-583977, 잔고: 2,272,500.0원\n",
+            "은행이름: SC은행, 예금주: 차정은, 계좌번호: 851-42-583977, 잔고: 1,972,500.0원\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q8. 여러 객체 생성 (3개의 인스턴스를 생성하고 생성된 인스턴스를 리스트에 저장)"
+      ],
+      "metadata": {
+        "id": "FGoK2VJ2EwQ0"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "        self.deposit_count = 0\n",
+        "\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    def deposit(self, amount):\n",
+        "        if amount >= 1:\n",
+        "            self.balance += amount\n",
+        "            self.deposit_count += 1\n",
+        "            if self.deposit_count % 5 == 0:\n",
+        "                self.balance *= 1.01\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    def withdraw(self, amount):\n",
+        "        if self.balance >= amount:\n",
+        "            self.balance -= amount\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_num(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def display_info(self):\n",
+        "        balance = format(self.balance, ',')\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔고: {}원'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, balance\n",
+        "        )\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return self.display_info()\n",
+        "\n",
+        "# Account 클래스로부터 3개의 인스턴스를 생성\n",
+        "account1 = Account('탄지로', 500000)\n",
+        "account2 = Account('네즈코', 1900000)\n",
+        "account3 = Account('렌코쿠', 20000000)\n",
+        "\n",
+        "# 생성된 인스턴스를 리스트에 저장\n",
+        "accounts = [account1, account2, account3]\n",
+        "\n",
+        "# 각 계좌의 정보를 출력\n",
+        "for account in accounts:\n",
+        "    print(account.display_info())\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "hN5Zln7uE4X0",
+        "outputId": "03b90d83-6fb4-4cab-f730-a8de3113d760"
+      },
+      "execution_count": 238,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 탄지로, 계좌번호: 332-12-400627, 잔고: 500,000원\n",
+            "은행이름: SC은행, 예금주: 네즈코, 계좌번호: 597-23-112439, 잔고: 1,900,000원\n",
+            "은행이름: SC은행, 예금주: 렌코쿠, 계좌번호: 357-39-237042, 잔고: 20,000,000원\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q9. 객체 순회 반복문을 통해 리스트에 있는 객체를 순회하면서 잔고가 100만원 이상인 고객의 정보만 출력"
+      ],
+      "metadata": {
+        "id": "IX1fUkOsHjZL"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "        self.deposit_count = 0\n",
+        "\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    def deposit(self, amount):\n",
+        "        if amount >= 1:\n",
+        "            self.balance += amount\n",
+        "            self.deposit_count += 1\n",
+        "            if self.deposit_count % 5 == 0:\n",
+        "                self.balance *= 1.01\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    def withdraw(self, amount):\n",
+        "        if self.balance >= amount:\n",
+        "            self.balance -= amount\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_num(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def display_info(self):\n",
+        "        balance = format(self.balance, ',')\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔고: {}원'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, balance\n",
+        "        )\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return self.display_info()\n",
+        "\n",
+        "# Account 클래스로부터 3개의 인스턴스를 생성\n",
+        "account1 = Account('탄지로', 500000)\n",
+        "account2 = Account('네즈코', 1900000)\n",
+        "account3 = Account('렌코쿠', 20000000)\n",
+        "\n",
+        "# 생성된 인스턴스를 리스트에 저장\n",
+        "accounts = [account1, account2, account3]\n",
+        "\n",
+        "# 각 계좌의 정보를 출력\n",
+        "for account in accounts:\n",
+        "    if account.balance >= 1000000:  # 잔고가 100만원 이상인 경우만 출력\n",
+        "        print(account.display_info())\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8s7oysAkIZX7",
+        "outputId": "6d87ba8c-6b12-43b2-c0ec-bac7a3bffeb6"
+      },
+      "execution_count": 239,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 네즈코, 계좌번호: 867-92-247117, 잔고: 1,900,000원\n",
+            "은행이름: SC은행, 예금주: 렌코쿠, 계좌번호: 541-51-429597, 잔고: 20,000,000원\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "### Q10. 입금과 출금 내역이 기록되도록 코드를 업데이트 하기\n",
+        "(입금내역과 출금내역을 출력하는 deposit_history와 withdraw_history 메서드를 추가)"
+      ],
+      "metadata": {
+        "id": "Jg6m_Fc1JdV7"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "\n",
+        "    account_count = 0\n",
+        "\n",
+        "    def __init__(self, account_holder, initial_balance):\n",
+        "        self.bank_name = 'SC은행'\n",
+        "        self.account_holder = account_holder\n",
+        "        self.account_number = self._generate_account_number()\n",
+        "        self.balance = initial_balance\n",
+        "        self.deposit_count = 0  # 입금 횟수를 추적하는 변수를 추가\n",
+        "        self.deposit_history = []  # 입금 내역을 저장하는 리스트를 추가\n",
+        "        self.withdraw_history = []  # 출금 내역을 저장하는 리스트를 추가\n",
+        "\n",
+        "        # 새 계좌가 생성될 때마다 계좌 개수를 증가\n",
+        "        Account.account_count += 1\n",
+        "\n",
+        "    def _generate_account_number(self):\n",
+        "        return '{}-{}-{}'.format(\n",
+        "            str(random.randint(100, 999)),\n",
+        "            str(random.randint(10, 99)),\n",
+        "            str(random.randint(100000, 999999))\n",
+        "        )\n",
+        "\n",
+        "    def deposit(self, amount):\n",
+        "        if amount >= 1:\n",
+        "            self.balance += amount\n",
+        "            self.deposit_count += 1  # 입금할 때마다 입금 횟수를 1씩 증가\n",
+        "            self.deposit_history.append(amount)  # 입금액을 입금 내역에 추가\n",
+        "            if self.deposit_count % 5 == 0:  # 입금 횟수가 5의 배수일 경우\n",
+        "                self.balance *= 1.01  # 잔고에 1%의 이자를 추가\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    def withdraw(self, amount):\n",
+        "        if self.balance >= amount:\n",
+        "            self.balance -= amount\n",
+        "            self.withdraw_history.append(amount)  # 출금액을 출금 내역에 추가\n",
+        "            return True\n",
+        "        else:\n",
+        "            return False\n",
+        "\n",
+        "    @classmethod\n",
+        "    def get_account_num(cls):\n",
+        "        return cls.account_count\n",
+        "\n",
+        "    def display_info(self):\n",
+        "        balance = format(self.balance, ',')\n",
+        "        return '은행이름: {}, 예금주: {}, 계좌번호: {}, 잔고: {}원'.format(\n",
+        "            self.bank_name, self.account_holder, self.account_number, balance\n",
+        "        )\n",
+        "\n",
+        "    def __str__(self):\n",
+        "        return self.display_info()\n",
+        "\n",
+        "# '차정은'이라는 예금주로 초기 잔고가 2,000,000원인 계좌를 생성\n",
+        "account = Account('차정은', 2000000)\n",
+        "\n",
+        "# 5회 입금을 진행하며 각 입금액은 50,000원\n",
+        "for _ in range(5):\n",
+        "    account.deposit(50000)\n",
+        "\n",
+        "# 계좌 정보를 출력\n",
+        "print(account.display_info())\n",
+        "\n",
+        "# 입금 내역을 출력\n",
+        "print(\"입금 내역: \", account.deposit_history)\n",
+        "\n",
+        "# 300,000원을 출금\n",
+        "account.withdraw(300000)\n",
+        "\n",
+        "# 계좌 정보를 출력\n",
+        "print(account.display_info())\n",
+        "\n",
+        "# 출금 내역을 출력\n",
+        "print(\"출금 내역: \", account.withdraw_history)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "RLRCHO3SLFsV",
+        "outputId": "300bf2c1-e51f-4547-d29d-6ca3a7e755ed"
+      },
+      "execution_count": 241,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "은행이름: SC은행, 예금주: 차정은, 계좌번호: 895-93-118810, 잔고: 2,272,500.0원\n",
+            "입금 내역:  [50000, 50000, 50000, 50000, 50000]\n",
+            "은행이름: SC은행, 예금주: 차정은, 계좌번호: 895-93-118810, 잔고: 1,972,500.0원\n",
+            "출금 내역:  [300000]\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "8IXNECk6VUQR"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "2MkHR5IIVNzF"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [],
+      "metadata": {
+        "id": "iJEt6zYKVNpS"
+      },
+      "execution_count": null,
+      "outputs": []
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "#메인 퀘스트 2번: 아이펠 통합 관리 프로그램"
+      ],
+      "metadata": {
+        "id": "mj0RjiQ6VMU5"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "###  Q1. Aiffel 클래스 만들기"
+      ],
+      "metadata": {
+        "id": "Sjh5KEK8W4Ta"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Student:\n",
+        "    def __init__(self, name, year, course_num, order):\n",
+        "        self.name = name\n",
+        "        self.student_id = self.generate_student_id(year, course_num, order)\n",
+        "        self.score = 0\n",
+        "        self.penalty = 0\n",
+        "\n",
+        "    def generate_student_id(self, year, course_num, order):\n",
+        "        YY = str(year)[-2:]\n",
+        "        NN = '31' if course_num == 8 else '00'  # 온라인 8기는 31기, 그 외는 00으로 설정\n",
+        "        C = '1' if course_num == '리서치' else '2'  # 리서치는 1, 코어는 2\n",
+        "        XX = str(order).zfill(2)  # 가나다순 번호, 2자리로 설정\n",
+        "        return YY + NN + C + XX"
+      ],
+      "metadata": {
+        "id": "anqEoik7B9lq"
+      },
+      "execution_count": 242,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Student 클래스 인스턴스 생성\n",
+        "student1 = Student(\"자인\", 2024, 8, 1)\n",
+        "student2 = Student(\"슈타르크\", 2024, 8, 2)\n",
+        "student3 = Student(\"페른\", 2024, 8, 3)"
+      ],
+      "metadata": {
+        "id": "FJzfxqUcCXTF"
+      },
+      "execution_count": 243,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# 학생 정보 출력\n",
+        "print(f\"학생 이름: {student1.name}, 학번: {student1.student_id}\")\n",
+        "print(f\"학생 이름: {student2.name}, 학번: {student2.student_id}\")\n",
+        "print(f\"학생 이름: {student3.name}, 학번: {student3.student_id}\")"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "hu2ud08tDkbM",
+        "outputId": "564fad98-259f-49eb-f400-b7ef9363ded2"
+      },
+      "execution_count": 244,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "학생 이름: 자인, 학번: 2431201\n",
+            "학생 이름: 슈타르크, 학번: 2431202\n",
+            "학생 이름: 페른, 학번: 2431203\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "###  Q2. 점수 관리 메서드"
+      ],
+      "metadata": {
+        "id": "heX4wnFPW-SR"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class Student:\n",
+        "    def __init__(self, name, year, course_num, order):\n",
+        "        self.name = name\n",
+        "        self.student_id = self.generate_student_id(year, course_num, order)\n",
+        "        self.score = 0\n",
+        "        self.penalty = 0\n",
+        "\n",
+        "    def generate_student_id(self, year, course_num, order):\n",
+        "        YY = str(year)[-2:]\n",
+        "        NN = '31' if course_num == 8 else '00'\n",
+        "        C = '1' if course_num == '리서치' else '2'\n",
+        "        XX = str(order).zfill(2)\n",
+        "        return YY + NN + C + XX\n",
+        "\n",
+        "    def add_score(self, score):\n",
+        "        self.score += score\n",
+        "        print(f\"{self.name}의 점수가 {score}점 추가되었습니다. 현재 점수: {self.score}\")\n",
+        "\n",
+        "    def deduct_score(self, score):\n",
+        "        self.score -= score\n",
+        "        self.penalty += score\n",
+        "        print(f\"{self.name}의 점수가 {score}점 차감되었습니다. 현재 점수: {self.score}, 페널티 점수: {self.penalty}\")\n",
+        "\n",
+        "    def print_total_score(self):\n",
+        "        print(f\"'{self.name}': '이름': {self.name}, '학번': {self.student_id}, '점수': {self.score}, '페널티': {self.penalty}, '총점': {self.score - self.penalty}\")\n"
+      ],
+      "metadata": {
+        "id": "L48KdINd3M4G"
+      },
+      "execution_count": 245,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "# Student 클래스 인스턴스 생성\n",
+        "student = Student(\"자인\", 2024, 8, 1)\n",
+        "\n",
+        "# 점수 부여\n",
+        "student.add_score(15)\n",
+        "\n",
+        "# 점수 차감 (페널티 부여)\n",
+        "student.deduct_score(5)\n",
+        "\n",
+        "# 현재 총점 출력\n",
+        "student.print_total_score()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "YM5eJcRK3UIl",
+        "outputId": "81be256e-0231-4494-8ed7-d93ecd9120ca"
+      },
+      "execution_count": 246,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "자인의 점수가 15점 추가되었습니다. 현재 점수: 15\n",
+            "자인의 점수가 5점 차감되었습니다. 현재 점수: 10, 페널티 점수: 5\n",
+            "'자인': '이름': 자인, '학번': 2431201, '점수': 10, '페널티': 5, '총점': 5\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "###  Q3. 그루 명단 관리하기"
+      ],
+      "metadata": {
+        "id": "QB9FCJY4Yr9T"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "class Student:\n",
+        "    def __init__(self, name, year, course_num, order):\n",
+        "        self.name = name\n",
+        "        self.student_id = self.generate_student_id(year, course_num, order)\n",
+        "        self.score = 0\n",
+        "        self.penalty = 0\n",
+        "\n",
+        "    def generate_student_id(self, year, course_num, order):\n",
+        "        YY = str(year)[-2:]\n",
+        "        NN = '31' if course_num == 8 else '00'\n",
+        "        C = '1' if course_num == '리서치' else '2'\n",
+        "        XX = str(order).zfill(2)\n",
+        "        return YY + NN + C + XX\n",
+        "\n",
+        "    def add_score(self, score):\n",
+        "        self.score += score\n",
+        "\n",
+        "    def deduct_score(self, score):\n",
+        "        self.score -= score\n",
+        "        self.penalty += score\n",
+        "\n",
+        "    def print_total_score(self):\n",
+        "        return f\"'{self.name}': '이름': {self.name}, '학번': {self.student_id}, '점수': {self.score}, '페널티': {self.penalty}, '총점': {self.score - self.penalty}\"\n",
+        "\n",
+        "class Class:\n",
+        "    def __init__(self):\n",
+        "        self.students = []\n",
+        "\n",
+        "    def add_student(self, student):\n",
+        "        self.students.append(student)\n",
+        "\n",
+        "    def remove_student(self, student_name):\n",
+        "        self.students = [student for student in self.students if student.name != student_name]\n",
+        "\n",
+        "    def print_students(self):\n",
+        "        for student in self.students:\n",
+        "            print(student.print_total_score())\n",
+        "\n",
+        "    def print_students_sorted(self):\n",
+        "        sorted_students = sorted(self.students, key=lambda student: student.score, reverse=True)\n",
+        "        for student in sorted_students:\n",
+        "            print(student.print_total_score())\n"
+      ],
+      "metadata": {
+        "id": "pkJaDiLI5cYC"
+      },
+      "execution_count": 247,
+      "outputs": []
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "my_class = Class()\n",
+        "\n",
+        "# 학생들 추가\n",
+        "my_class.add_student(Student(\"자인\", 2024, 8, 1))\n",
+        "my_class.add_student(Student(\"슈타르크\", 2024, 8, 2))\n",
+        "my_class.add_student(Student(\"페른\", 2024, 8, 3))\n",
+        "\n",
+        "# 전체 명단과 정보 출력\n",
+        "my_class.print_students()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "j84AWsMV5cUa",
+        "outputId": "a82989e3-4e8e-4d78-b387-99afeb2026c4"
+      },
+      "execution_count": 248,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "'자인': '이름': 자인, '학번': 2431201, '점수': 0, '페널티': 0, '총점': 0\n",
+            "'슈타르크': '이름': 슈타르크, '학번': 2431202, '점수': 0, '페널티': 0, '총점': 0\n",
+            "'페른': '이름': 페른, '학번': 2431203, '점수': 0, '페널티': 0, '총점': 0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "my_class = Class()\n",
+        "\n",
+        "# 학생들 추가\n",
+        "my_class.add_student(Student(\"뎅켄\", 2024, 8, 4))\n",
+        "my_class.add_student(Student(\"프리렌\", 2024, 8, 5))\n",
+        "my_class.add_student(Student(\"힘멜\", 2024, 8, 6))\n",
+        "\n",
+        "# 점수 추가\n",
+        "my_class.students[0].add_score(10)\n",
+        "my_class.students[1].add_score(20)\n",
+        "my_class.students[2].add_score(15)\n",
+        "\n",
+        "# 퀘스트 점수를 기준으로 내림차순으로 정렬해서 출력\n",
+        "my_class.print_students_sorted()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "8502Znkg5cRE",
+        "outputId": "09b81ee0-53e3-428b-9884-833435d51ea9"
+      },
+      "execution_count": 249,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "'프리렌': '이름': 프리렌, '학번': 2431205, '점수': 20, '페널티': 0, '총점': 20\n",
+            "'힘멜': '이름': 힘멜, '학번': 2431206, '점수': 15, '페널티': 0, '총점': 15\n",
+            "'뎅켄': '이름': 뎅켄, '학번': 2431204, '점수': 10, '페널티': 0, '총점': 10\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "my_class = Class()\n",
+        "\n",
+        "# 학생들 추가\n",
+        "my_class.add_student(Student(\"하이터\", 2024, 8, 7))\n",
+        "my_class.add_student(Student(\"아이젠\", 2024, 8, 8))\n",
+        "my_class.add_student(Student(\"위벨\", 2024, 8, 9))\n",
+        "\n",
+        "# 특정 인물 정보 삭제\n",
+        "my_class.remove_student(\"아이젠\")\n",
+        "\n",
+        "# 전체 명단과 정보 출력\n",
+        "my_class.print_students()"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "IveGKqxW5cIk",
+        "outputId": "35fc5325-2497-4932-fdb4-a7c9ea0f7057"
+      },
+      "execution_count": 250,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "'하이터': '이름': 하이터, '학번': 2431207, '점수': 0, '페널티': 0, '총점': 0\n",
+            "'위벨': '이름': 위벨, '학번': 2431209, '점수': 0, '페널티': 0, '총점': 0\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "###  Q4. 그룹핑 기능 추가하기"
+      ],
+      "metadata": {
+        "id": "ebOxCzEIuIUW"
+      }
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "####A. 2인조 그룹핑\n"
+      ],
+      "metadata": {
+        "id": "ac6pIrgMuRf9"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "    def __init__(self, name):\n",
+        "        self.name = name\n",
+        "\n",
+        "# 10명의 학생 추가\n",
+        "students = ['자인', '슈타르크', '페른', '하이터', '아이젠', '위벨', '비어벨', '뎅켄', '프리렌', '힘멜']\n",
+        "\n",
+        "# 학생들의 계좌 인스턴스 생성\n",
+        "accounts = [Account(name) for name in students]\n",
+        "\n",
+        "# 그룹핑 기능 추가\n",
+        "def group_accounts(accounts, group_size):\n",
+        "    random.shuffle(accounts)\n",
+        "    return [accounts[i:i+group_size] for i in range(0, len(accounts), group_size)]\n",
+        "\n",
+        "# 2인조 그룹핑\n",
+        "two_person_groups = group_accounts(accounts, 2)\n",
+        "\n",
+        "# 그룹 출력\n",
+        "print(\"2인조 그룹:\")\n",
+        "for group in two_person_groups:\n",
+        "    print([account.name for account in group])\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "d4T0z3uKqlTa",
+        "outputId": "342f9e6e-80e6-4cfd-c8d0-a8e6f5f279b2"
+      },
+      "execution_count": 251,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "2인조 그룹:\n",
+            "['페른', '슈타르크']\n",
+            "['자인', '비어벨']\n",
+            "['아이젠', '프리렌']\n",
+            "['힘멜', '뎅켄']\n",
+            "['하이터', '위벨']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "####B. 3인조 그룹핑"
+      ],
+      "metadata": {
+        "id": "OtSCUyXIubnZ"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "    def __init__(self, name):\n",
+        "        self.name = name\n",
+        "\n",
+        "# 10명의 학생 추가\n",
+        "students = ['자인', '슈타르크', '페른', '하이터', '아이젠', '위벨', '비어벨', '뎅켄', '프리렌', '힘멜']\n",
+        "\n",
+        "# 학생들의 계좌 인스턴스 생성\n",
+        "accounts = [Account(name) for name in students]\n",
+        "\n",
+        "# 그룹핑 기능 추가\n",
+        "def group_accounts(accounts, group_size):\n",
+        "    random.shuffle(accounts)\n",
+        "    groups = [accounts[i:i+group_size] for i in range(0, len(accounts), group_size)]\n",
+        "\n",
+        "    # 1명이 남을 경우 랜덤으로 아무 그룹에 넣게\n",
+        "    if len(groups[-1]) == 1:\n",
+        "        random_group = random.choice(groups[:-1])\n",
+        "        random_group.append(groups[-1][0])\n",
+        "        groups = groups[:-1]\n",
+        "\n",
+        "    return groups\n",
+        "\n",
+        "# 3인조 그룹핑\n",
+        "three_person_groups = group_accounts(accounts, 3)\n",
+        "\n",
+        "# 그룹 출력\n",
+        "print(\"3인조 그룹:\")\n",
+        "for group in three_person_groups:\n",
+        "    print([account.name for account in group])\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "Klh2nRcHryuv",
+        "outputId": "5640a159-ea36-44d9-d3df-5404109bfd24"
+      },
+      "execution_count": 252,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "3인조 그룹:\n",
+            "['아이젠', '하이터', '위벨', '슈타르크']\n",
+            "['자인', '프리렌', '힘멜']\n",
+            "['페른', '뎅켄', '비어벨']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "####C. 4인조 그룹핑"
+      ],
+      "metadata": {
+        "id": "icZV4hiNukq_"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Account:\n",
+        "    def __init__(self, name):\n",
+        "        self.name = name\n",
+        "\n",
+        "# 10명의 학생 추가\n",
+        "students = ['자인', '슈타르크', '페른', '하이터', '아이젠', '위벨', '비어벨', '뎅켄', '프리렌', '힘멜']\n",
+        "\n",
+        "# 학생들의 계좌 인스턴스 생성\n",
+        "accounts = [Account(name) for name in students]\n",
+        "\n",
+        "# 그룹핑 기능 추가\n",
+        "def group_accounts(accounts, group_size):\n",
+        "    random.shuffle(accounts)\n",
+        "    groups = [accounts[i:i+group_size] for i in range(0, len(accounts), group_size)]\n",
+        "\n",
+        "    # 남은 인원은 별도의 그룹으로 넣기\n",
+        "    if len(groups[-1]) < group_size:\n",
+        "        extra_group = groups.pop()\n",
+        "        groups.append(extra_group)\n",
+        "\n",
+        "    return groups\n",
+        "\n",
+        "# 4인조 그룹핑\n",
+        "four_person_groups = group_accounts(accounts, 4)\n",
+        "\n",
+        "# 그룹 출력\n",
+        "print(\"4인조 그룹:\")\n",
+        "for group in four_person_groups:\n",
+        "    print([account.name for account in group])\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "HHGb1-2Wtxu9",
+        "outputId": "b30f0802-d308-4776-d9d1-d582e40ea8da"
+      },
+      "execution_count": 253,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "4인조 그룹:\n",
+            "['비어벨', '아이젠', '자인', '슈타르크']\n",
+            "['위벨', '하이터', '프리렌', '힘멜']\n",
+            "['페른', '뎅켄']\n"
+          ]
+        }
+      ]
+    },
+    {
+      "cell_type": "markdown",
+      "source": [
+        "##아이펠 통합 관리 프로그램 실행"
+      ],
+      "metadata": {
+        "id": "3kGSZjMHAZfU"
+      }
+    },
+    {
+      "cell_type": "code",
+      "source": [
+        "import random\n",
+        "\n",
+        "class Student:\n",
+        "    def __init__(self, name, year, course_num, order):\n",
+        "        self.name = name\n",
+        "        self.student_id = self.generate_student_id(year, course_num, order)\n",
+        "        self.score = 0\n",
+        "        self.penalty = 0\n",
+        "\n",
+        "    def generate_student_id(self, year, course_num, order):\n",
+        "        YY = str(year)[-2:]\n",
+        "        NN = '31' if course_num == 8 else '00'\n",
+        "        C = '1' if course_num == '리서치' else '2'\n",
+        "        XX = str(order).zfill(2)\n",
+        "        return YY + NN + C + XX\n",
+        "\n",
+        "    def add_score(self, score):\n",
+        "        self.score += score\n",
+        "        print(f\"{self.name}의 점수가 {score}점 추가되었습니다. 현재 점수: {self.score}\")\n",
+        "\n",
+        "    def deduct_score(self, score):\n",
+        "        self.score -= score\n",
+        "        self.penalty += score\n",
+        "        print(f\"{self.name}의 점수가 {score}점 차감되었습니다. 현재 점수: {self.score}, 페널티 점수: {self.penalty}\")\n",
+        "\n",
+        "    def print_total_score(self):\n",
+        "        print(f\"'{self.name}': '이름': {self.name}, '학번': {self.student_id}, '점수': {self.score}, '페널티': {self.penalty}, '총점': {self.score - self.penalty}\")\n",
+        "\n",
+        "class Class:\n",
+        "    def __init__(self):\n",
+        "        self.students = []\n",
+        "\n",
+        "    def add_student(self, student):\n",
+        "        self.students.append(student)\n",
+        "        print(f\"{student.name}이(가) 그룹에 추가되었습니다.\")\n",
+        "\n",
+        "    def remove_student(self, student_name):\n",
+        "        self.students = [student for student in self.students if student.name != student_name]\n",
+        "        print(f\"{student_name}이(가) 그룹에서 제거되었습니다.\")\n",
+        "\n",
+        "    def print_students(self):\n",
+        "        for student in self.students:\n",
+        "            print(student.print_total_score())\n",
+        "\n",
+        "    def print_students_sorted(self):\n",
+        "        sorted_students = sorted(self.students, key=lambda student: student.score, reverse=True)\n",
+        "        for student in sorted_students:\n",
+        "            print(student.print_total_score())\n",
+        "\n",
+        "# Class 클래스 인스턴스 생성\n",
+        "my_class = Class()\n",
+        "\n",
+        "# 학생들 추가\n",
+        "my_class.add_student(Student(\"자인\", 2024, 8, 1))\n",
+        "my_class.add_student(Student(\"슈타르크\", 2024, 8, 2))\n",
+        "my_class.add_student(Student(\"페른\", 2024, 8, 3))\n",
+        "\n",
+        "# 점수 추가\n",
+        "my_class.students[0].add_score(10)\n",
+        "my_class.students[1].add_score(20)\n",
+        "my_class.students[2].add_score(15)\n",
+        "\n",
+        "# 전체 명단과 정보 출력\n",
+        "print(\"전체 명단과 정보:\")\n",
+        "my_class.print_students()\n",
+        "\n",
+        "# 퀘스트 점수를 기준으로 내림차순으로 정렬해서 출력\n",
+        "print(\"\\n퀘스트 점수를 기준으로 내림차순으로 정렬:\")\n",
+        "my_class.print_students_sorted()\n",
+        "\n",
+        "# 특정 인물 정보 삭제\n",
+        "print(\"\\n특정 인물 정보 삭제 후 전체 명단과 정보:\")\n",
+        "my_class.remove_student(\"자인\")\n",
+        "my_class.print_students()\n",
+        "\n",
+        "import random\n",
+        "\n",
+        "class Student:\n",
+        "    def __init__(self, name, year, course_num, order):\n",
+        "        self.name = name\n",
+        "        self.student_id = self.generate_student_id(year, course_num, order)\n",
+        "        self.score = 0\n",
+        "        self.penalty = 0\n",
+        "\n",
+        "    def generate_student_id(self, year, course_num, order):\n",
+        "        YY = str(year)[-2:]\n",
+        "        NN = '31' if course_num == 8 else '00'\n",
+        "        C = '1' if course_num == '리서치' else '2'\n",
+        "        XX = str(order).zfill(2)\n",
+        "        return YY + NN + C + XX\n",
+        "\n",
+        "    def add_score(self, score):\n",
+        "        self.score += score\n",
+        "        print(f\"{self.name}의 점수가 {score}점 추가되었습니다. 현재 점수: {self.score}\")\n",
+        "\n",
+        "    def deduct_score(self, score):\n",
+        "        self.score -= score\n",
+        "        self.penalty += score\n",
+        "        print(f\"{self.name}의 점수가 {score}점 차감되었습니다. 현재 점수: {self.score}, 페널티 점수: {self.penalty}\")\n",
+        "\n",
+        "    def print_total_score(self):\n",
+        "        print(f\"'{self.name}': '이름': {self.name}, '학번': {self.student_id}, '점수': {self.score}, '페널티': {self.penalty}, '총점': {self.score - self.penalty}\")\n",
+        "\n",
+        "class Class:\n",
+        "    def __init__(self):\n",
+        "        self.students = []\n",
+        "\n",
+        "    def add_student(self, student):\n",
+        "        self.students.append(student)\n",
+        "        print(f\"{student.name}이(가) 그룹에 추가되었습니다.\")\n",
+        "\n",
+        "    def remove_student(self, student_name):\n",
+        "        self.students = [student for student in self.students if student.name != student_name]\n",
+        "        print(f\"{student_name}이(가) 그룹에서 제거되었습니다.\")\n",
+        "\n",
+        "    def print_students(self):\n",
+        "        for student in self.students:\n",
+        "            print(student.print_total_score())\n",
+        "\n",
+        "    def print_students_sorted(self):\n",
+        "        sorted_students = sorted(self.students, key=lambda student: student.score, reverse=True)\n",
+        "        for student in sorted_students:\n",
+        "            print(student.print_total_score())\n",
+        "\n",
+        "    def group_students(self, group_size):\n",
+        "        random.shuffle(self.students)  # 학생 목록을 랜덤 배정\n",
+        "        groups = [self.students[i:i+group_size] for i in range(0, len(self.students), group_size)]  # 그룹 크기로 학생들을 배분\n",
+        "        for i, group in enumerate(groups, start=1):\n",
+        "            print(f\"그룹 {i}: {[student.name for student in group]}\")  # 각 그룹의 학생 이름 출력\n",
+        "\n",
+        "# Class 클래스 인스턴스 생성\n",
+        "my_class = Class()\n",
+        "\n",
+        "# 학생들 추가\n",
+        "my_class.add_student(Student(\"제리에\", 2024, 8,11))\n",
+        "my_class.add_student(Student(\"레르넨\", 2024, 8,12))\n",
+        "my_class.add_student(Student(\"젠제\", 2024, 8,13))\n",
+        "my_class.add_student(Student(\"게나우\", 2024, 8,14))\n",
+        "my_class.add_student(Student(\"메토데\", 2024, 8,15))\n",
+        "my_class.add_student(Student(\"란트\", 2024, 8,16))\n",
+        "my_class.add_student(Student(\"리히터\", 2024, 8,17))\n",
+        "\n",
+        "# 2인조 그룹핑\n",
+        "print(\"\\n2인조 그룹핑:\")\n",
+        "my_class.group_students(2)\n",
+        "\n",
+        "# 3인조 그룹핑\n",
+        "print(\"\\n3인조 그룹핑:\")\n",
+        "my_class.group_students(3)\n",
+        "\n",
+        "# 4인조 그룹핑\n",
+        "print(\"\\n4인조 그룹핑:\")\n",
+        "my_class.group_students(4)\n"
+      ],
+      "metadata": {
+        "colab": {
+          "base_uri": "https://localhost:8080/"
+        },
+        "id": "kpLmNdP89tR6",
+        "outputId": "45c418bc-5001-4154-db37-6341830faef5"
+      },
+      "execution_count": 256,
+      "outputs": [
+        {
+          "output_type": "stream",
+          "name": "stdout",
+          "text": [
+            "자인이(가) 그룹에 추가되었습니다.\n",
+            "슈타르크이(가) 그룹에 추가되었습니다.\n",
+            "페른이(가) 그룹에 추가되었습니다.\n",
+            "자인의 점수가 10점 추가되었습니다. 현재 점수: 10\n",
+            "슈타르크의 점수가 20점 추가되었습니다. 현재 점수: 20\n",
+            "페른의 점수가 15점 추가되었습니다. 현재 점수: 15\n",
+            "전체 명단과 정보:\n",
+            "'자인': '이름': 자인, '학번': 2431201, '점수': 10, '페널티': 0, '총점': 10\n",
+            "None\n",
+            "'슈타르크': '이름': 슈타르크, '학번': 2431202, '점수': 20, '페널티': 0, '총점': 20\n",
+            "None\n",
+            "'페른': '이름': 페른, '학번': 2431203, '점수': 15, '페널티': 0, '총점': 15\n",
+            "None\n",
+            "\n",
+            "퀘스트 점수를 기준으로 내림차순으로 정렬:\n",
+            "'슈타르크': '이름': 슈타르크, '학번': 2431202, '점수': 20, '페널티': 0, '총점': 20\n",
+            "None\n",
+            "'페른': '이름': 페른, '학번': 2431203, '점수': 15, '페널티': 0, '총점': 15\n",
+            "None\n",
+            "'자인': '이름': 자인, '학번': 2431201, '점수': 10, '페널티': 0, '총점': 10\n",
+            "None\n",
+            "\n",
+            "특정 인물 정보 삭제 후 전체 명단과 정보:\n",
+            "자인이(가) 그룹에서 제거되었습니다.\n",
+            "'슈타르크': '이름': 슈타르크, '학번': 2431202, '점수': 20, '페널티': 0, '총점': 20\n",
+            "None\n",
+            "'페른': '이름': 페른, '학번': 2431203, '점수': 15, '페널티': 0, '총점': 15\n",
+            "None\n",
+            "제리에이(가) 그룹에 추가되었습니다.\n",
+            "레르넨이(가) 그룹에 추가되었습니다.\n",
+            "젠제이(가) 그룹에 추가되었습니다.\n",
+            "게나우이(가) 그룹에 추가되었습니다.\n",
+            "메토데이(가) 그룹에 추가되었습니다.\n",
+            "란트이(가) 그룹에 추가되었습니다.\n",
+            "리히터이(가) 그룹에 추가되었습니다.\n",
+            "\n",
+            "2인조 그룹핑:\n",
+            "그룹 1: ['란트', '젠제']\n",
+            "그룹 2: ['레르넨', '리히터']\n",
+            "그룹 3: ['게나우', '제리에']\n",
+            "그룹 4: ['메토데']\n",
+            "\n",
+            "3인조 그룹핑:\n",
+            "그룹 1: ['메토데', '젠제', '레르넨']\n",
+            "그룹 2: ['게나우', '리히터', '제리에']\n",
+            "그룹 3: ['란트']\n",
+            "\n",
+            "4인조 그룹핑:\n",
+            "그룹 1: ['메토데', '젠제', '란트', '리히터']\n",
+            "그룹 2: ['게나우', '제리에', '레르넨']\n"
+          ]
+        }
+      ]
+    }
+  ]
+}
