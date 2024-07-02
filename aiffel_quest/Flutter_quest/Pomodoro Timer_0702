@@ -12,7 +12,7 @@ void startPomodoroTimer() {
   const shortBreakDuration = Duration(minutes: 5);  // 짧은 휴식 시간을 설정
   const longBreakDuration = Duration(minutes: 15);  // 긴 휴식 시간을 설정
 
-  // Timer.periodic을 사용하여 반복 타이머를 생성합니다.
+  // Timer.periodic을 사용하여 반복 타이머를 생성
   Timer timer = Timer.periodic(Duration(seconds: 1), (timer) {
     if (sessionCount < 4) {  // 4회차 이전이라면
       print('작업 시간: ${workDuration.inMinutes}분');
@@ -24,12 +24,12 @@ void startPomodoroTimer() {
       Future.delayed(workDuration, () {
         print('긴 휴식 시간: ${longBreakDuration.inMinutes}분');
       });
-      sessionCount = 0;  // 회차를 초기화합니다.
-      cycleCount++;  // 전체 Pomodoro 타이머의 회차를 증가시킵니다.
+      sessionCount = 0;  // 회차를 초기화
+      cycleCount++;  // 전체 Pomodoro 타이머의 회차를 증가
     }
     sessionCount++;
     if (cycleCount == 8) {  // 전체 Pomodoro 타이머가 8회차를 반복하면
-      timer.cancel();  // 타이머를 취소합니다.
+      timer.cancel();  // 타이머를 취소
     }
   });
 }
