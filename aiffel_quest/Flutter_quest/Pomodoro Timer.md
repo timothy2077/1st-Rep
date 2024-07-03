@@ -1,4 +1,4 @@
-(https://dartpad.dev/?id=0bfb1144ff824b90072e547af60f5409)
+(https://dartpad.dev/?id=0bfb1144ff824b90072e547af60f5409) 
 
 배운 점: dart:async 라이브러리와 Timer.periodic 함수를 사용하여 반복 타이머를 구현하는 방법을 배웠고 Future.delayed 함수를 사용하여 작업 시간과 휴식 시간을 설정하는 방법을 배웠다.
 
