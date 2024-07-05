@@ -84,6 +84,7 @@ class MyHomePage extends StatelessWidget { // StatelessWidget을 상속받는 My
   }
 }
 
+// https://dartpad.dev/?id=3de56292d809afbd97fab070fb03776f
 // *회고*
 
 // 이번 프로젝트를 통해 Flutter의 Stack 위젯과 Align 위젯을 활용하여 컨테이너를 특정 위치에 배치하는 방법을 깊이 이해하게 되었습니다. 처음에는 Align 위젯의 alignment 속성을 사용해 컨테이너를 원하는 위치에 배치하려 했으나, 예상대로 작동하지 않아 많은 시간을 소비했습니다.그러나, 학습교재 233 페이지에 겹쳐서 모두 보이기 - Stack을 다시 읽으면서 방향 전환을 고려하던 찰나에 같이 협업하던 재이님께서 처음부터 Stack의 children 속성을 사용해 컨테이너를 구현하셨다는 말을 듣고 과감하게 수정을 하게 되었습니다. 
