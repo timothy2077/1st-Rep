@@ -1,0 +1,93 @@
+import 'package:flutter/material.dart'; // Flutter 머티리얼 디자인 위젯 라이브러리를 호출
+
+void main() {
+  runApp(MyApp()); // 앱 실행 
+}
+
+class MyApp extends StatelessWidget { // StatelessWidget을 상속받는 MyApp 클래스를 정의
+  @override
+  Widget build(BuildContext context) { // 위젯을 빌드하는 메서드
+    return MaterialApp( // MaterialApp 위젯을 반환
+      title: '플러터 앱 만들기', // 앱의 타이틀을 설정
+      theme: ThemeData( // 앱의 테마를 설정
+        primarySwatch: Colors.blue, // 기본 색상을 파란색으로 설정
+      ),
+      home: MyHomePage(), // 앱의 홈 페이지를 MyHomePage 위젯으로 설정
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget { // StatelessWidget을 상속받는 MyHomePage 클래스를 정의
+  @override
+  Widget build(BuildContext context) { // 위젯을 빌드하는 메서드
+    return Scaffold( // Scaffold 위젯을 반환
+      appBar: AppBar( // 상단 앱바를 정의
+        leading: Icon(Icons.location_city), // 앱바 왼쪽에 자주 사용했던 city 아이콘을 추가
+        title: Text('플러터 앱 만들기'), // 앱바 중앙에 텍스트를 추가
+        backgroundColor: Colors.blue, // 앱바의 배경색을 파란색으로 설정
+      ),
+      body: Column( // 본문을 열 방향으로 배열하는 Column 위젯을 사용
+        children: <Widget>[ // Column의 자식 위젯들을 정의
+          Expanded( // Expanded 위젯을 사용하여 남은 공간을 채움
+            flex: 1, // flex 속성을 사용하여 공간을 얼마나 차지할지 지정
+            child: Column( // Column 위젯을 자식으로 추가
+              mainAxisAlignment: MainAxisAlignment.center, // 자식 위젯들을 중앙에 배치
+              children: [
+                ElevatedButton( // 누르면 동작하는 버튼을 추가
+                  onPressed: (){ // 버튼이 눌렸을 때 실행할 동작을 정의
+                    print('버튼이 눌렸습니다.'); // 콘솔에 메시지를 출력
+                  },
+                  child: Text('Text') // 버튼의 내용으로 'Text' 텍스트를 추가
+                )
+              ]
+            )
+          ),
+          Expanded( // Expanded 위젯을 사용하여 남은 공간을 채움
+            flex: 1, // flex 속성을 사용하여 공간을 얼마나 차지할지 지정
+            child: Center( // 중앙에 위젯을 배치하는 Center 위젯을 사용
+              child: Container( // Container 위젯을 추가
+                child: Stack( // 위젯을 겹쳐서 배치하는 Stack 위젯을 사용
+                  children: [
+                    Container( // Container 위젯을 추가
+                      width: 300, // 컨테이너의 너비를 설정
+                      height: 300, // 컨테이너의 높이를 설정
+                      color: Colors.red, // 컨테이너의 색상을 빨간색으로 설정
+                    ),
+                    Container( // Container 위젯을 추가
+                      width: 240, // 컨테이너의 너비를 설정
+                      height: 240, // 컨테이너의 높이를 설정
+                      color: Colors.green, // 컨테이너의 색상을 초록색으로 설정
+                    ),
+                    Container( // Container 위젯을 추가
+                      width: 180, // 컨테이너의 너비를 설정
+                      height: 180, // 컨테이너의 높이를 설정
+                      color: Colors.yellow, // 컨테이너의 색상을 노란색으로 설정
+                    ),
+                    Container( // Container 위젯을 추가
+                      width: 120, // 컨테이너의 너비를 설정
+                      height: 120, // 컨테이너의 높이를 설정
+                      color: Colors.purple, // 컨테이너의 색상을 보라색으로 설정
+                    ),
+                    Container( // Container 위젯을 추가
+                      width: 60, // 컨테이너의 너비를 설정
+                      height: 60, // 컨테이너의 높이를 설정
+                      color: Colors.orange, // 컨테이너의 색상을 주황색으로 설정
+                    ),
+                  ] 
+                )
+              )
+            )
+          ),
+        ]
+      ),
+    );
+  }
+}
+
+// *회고*
+
+// 이번 프로젝트를 통해 Flutter의 Stack 위젯과 Align 위젯을 활용하여 컨테이너를 특정 위치에 배치하는 방법을 깊이 이해하게 되었습니다. 처음에는 Align 위젯의 alignment 속성을 사용해 컨테이너를 원하는 위치에 배치하려 했으나, 예상대로 작동하지 않아 많은 시간을 소비했습니다.그러나, 학습교재 233 페이지에 겹쳐서 모두 보이기 - Stack을 다시 읽으면서 방향 전환을 고려하던 찰나에 같이 협업하던 재이님께서 처음부터 Stack의 children 속성을 사용해 컨테이너를 구현하셨다는 말을 듣고 과감하게 수정을 하게 되었습니다. 
+
+// 재이님과 전체적인 코드를 서로 살펴보면서 Flutter의 레이아웃 메커니즘을 더 깊이 이해하게 되었고, 재이님은 Text 구현에 저는 Stack 위젯의 children 속성을 사용해 위젯을 순서대로 겹치게 배치하는 방법을 찾는 시너지 효과를 얻을 수 있었습니다.  이 방법을 사용하니, 컨테이너들이 원하는 대로 중첩되어 잘 출력되었고 각 컨테이너마도 색깔을 다르게 선정하여 더 나은 시각화를 꾀하였습니다. 
+
+// 이 경험을 통해 문제 해결에 있어 고정관념에 사로잡혀 한 접근방식을 고수하는 대신 다양한 접근 방식들에 늘 열려있어야 하며 더군다나 Flutter와 같은 프레임워크를 사용할 때 그 동작 원리와 메커니즘을 최우선적으로 이해하고 코드를 작성하는 것이 매우 중요하다는 것을 다시 한번 느꼈습니다.
