@@ -1,1 +1,129 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp());
+}
+
+
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    // MaterialApp 위젯 반환
+    return MaterialApp(
+      title: 'Navigation Demo',
+      theme: ThemeData(
+        primarySwatch: Colors.blue,
+      ),
+      initialRoute: '/',
+      routes: {
+        '/': (context) => FirstPage(), // 첫 번째 페이지 라우트 설정
+        '/second': (context) => SecondPage(), // 두 번째 페이지 라우트 설정
+      },
+    );
+  }
+}
+
+// 첫 번째 페이지 위젯
+class FirstPage extends StatefulWidget {
+  @override
+  _FirstPageState createState() => _FirstPageState();
+}
+
+// 첫 번째 페이지 상태 관리 클래스
+class _FirstPageState extends State<FirstPage> {
+  bool is_cat = true; // is_cat 변수 초기화
+
+  @override
+  Widget build(BuildContext context) {
+    // Scaffold 위젯 반환하여 UI 구성 시작
+    return Scaffold(
+      backgroundColor: Colors.lightBlue, // 배경색을 lightblue로 설정
+      appBar: AppBar(
+        title: Text('First Page'), // AppBar 제목 설정
+        leading: Image.network('https://th.bing.com/th/id/OIG4.LwUxnjDe.BKA5DHJUd6b?w=173&h=173&c=6&r=0&o=5&dpr=1.3&pid=ImgGn'), // AppBar 왼쪽 아이콘 설정
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              child: Text('Next'), // 'Next' 버튼 텍스트
+              onPressed: () {
+                print(is_cat ? 'It is a cat' : 'It is not a cat'); // 디버그 콘솔에 출력
+                setState(() {
+                  is_cat = false; // is_cat 상태 변경
+                });
+                Navigator.pushNamed(context, '/second', arguments: is_cat); // 두 번째 페이지로 이동하며 is_cat 변수 전달
+              },
+            ),
+            SizedBox(height: 20),
+            Image.network(
+              'https://images.unsplash.com/photo-1598935888738-cd2622bcd437?w=500&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTJ8fCVFQSVCNyU8MCVFQyU9NyVBQyVFQyU9QSVCNCUyMCVFQSVCMyVBMCVFQyU9NiU9MSVFQyU9RCVCNHxlbnwwfHwwfHx8MA%3D%3D',
+              width: 300,
+              height: 300, // 고양이 이미지 출력
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+// 두 번째 페이지 위젯
+class SecondPage extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    final bool is_cat = ModalRoute.of(context)?.settings.arguments as bool? ?? false; // is_cat 변수 받아오기
+
+    return Scaffold(
+      backgroundColor: Colors.purple, // 배경색을 purple로 설정
+      appBar: AppBar(
+        title: Text('Second Page'), // AppBar 제목 설정
+        leading: Icon(Icons.pets), // AppBar 왼쪽 아이콘 설정
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            ElevatedButton(
+              child: Text('Back'), // 'Back' 버튼 텍스트
+              onPressed: () {
+                print(is_cat ? 'It is a cat' : 'It is not a cat'); // 디버그 콘솔에 출력
+                Navigator.pop(context); // 이전 페이지로 돌아가기
+              },
+            ),
+            SizedBox(height: 20),
+            Image.network(
+              'https://images.unsplash.com/photo-1593134257782-e89567b7718a?q=80&w=1935&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              width: 300,
+              height: 300, // 강아지 이미지 출력
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+https://dartpad.dev/?id=74645bffff258d54836363f1f91c7441
+
+// *회고*
+// 이번 프로젝트에서는 'First Page’와 'Second Page’라는 두 개의 페이지를 구현하였습니다. 'First Page’에서 ‘Next’ 버튼을 클릭하면 'Second Page’로 전환되고, 'Second Page’에서 ‘Back’ 버튼을 클릭하면 'First Page’로 복귀하는 기능을 구현하였습니다. 이를 위해 pushNamed() 함수를 사용하여 'Second Page’로 이동하고, pop() 함수를 사용하여 'First Page’로 복귀하였습니다.
+
+// 처음에는 push() 함수를 사용하여 'Second Page’로 이동하는 것을 고려했었습니다. 그러나 push() 함수는 새로운 페이지를 스택에 추가하는 기능을 가지고 있기 때문에, ‘Back’ 버튼을 클릭했을 때 생성된 페이지 스택을 삭제하는 요구사항을 만족시키지 못하였습니다. 따라서 pushNamed() 함수를 사용하여 'Second Page’로 이동하고, pop() 함수를 사용하여 'First Page’로 복귀하는 방식을 선택하였습니다. 이렇게 하면 ‘Back’ 버튼을 클릭했을 때 생성된 페이지 스택을 성공적으로 삭제할 수 있습니다.
+
+// 또한, 'First Page’에서 ‘Next’ 버튼을 클릭하면 is_cat 변수를 'Second Page’로 전달하도록 구현하였습니다. 이 is_cat 변수는 'First Page’에서 ‘Next’ 버튼을 클릭할 때마다 디버그 콘솔에 출력되며, ‘Back’ 버튼을 클릭하면 'Second Page’에서 'First Page’로 복귀할 때 이 변수의 상태가 유지되도록 하였습니다.
+
+// 이 프로젝트를 통해 Flutter에서 페이지 간 이동을 구현하고, 데이터를 전달하며, 페이지 스택을 관리하는 방법에 대해 좀 더 명쾌하게 이해할 수 있었습니다.
+@timothy2077
+Author
+timothy2077 commented 18 minutes ago
+이번 프로젝트에서는 'First Page’와 'Second Page’라는 두 개의 페이지를 구현하였습니다. 'First Page’에서 ‘Next’ 버튼을 클릭하면 'Second Page’로 전환되고, 'Second Page’에서 ‘Back’ 버튼을 클릭하면 'First Page’로 복귀하는 기능을 구현하였습니다. 이를 위해 pushNamed() 함수를 사용하여 'Second Page’로 이동하고, pop() 함수를 사용하여 'First Page’로 복귀하였습니다.
+
+처음에는 push() 함수를 사용하여 'Second Page’로 이동하는 것을 고려했었습니다. 그러나 push() 함수는 새로운 페이지를 스택에 추가하는 기능을 가지고 있기 때문에, ‘Back’ 버튼을 클릭했을 때 생성된 페이지 스택을 삭제하는 요구사항을 만족시키지 못하였습니다. 따라서 pushNamed() 함수를 사용하여 'Second Page’로 이동하고, pop() 함수를 사용하여 'First Page’로 복귀하는 방식을 선택하였습니다. 이렇게 하면 ‘Back’ 버튼을 클릭했을 때 생성된 페이지 스택을 성공적으로 삭제할 수 있습니다.
+
+또한, 'First Page’에서 ‘Next’ 버튼을 클릭하면 is_cat 변수를 'Second Page’로 전달하도록 구현하였습니다. 이 is_cat 변수는 'First Page’에서 ‘Next’ 버튼을 클릭할 때마다 디버그 콘솔에 출력되며, ‘Back’ 버튼을 클릭하면 'Second Page’에서 'First Page’로 복귀할 때 이 변수의 상태가 유지되도록 하였습니다.
+
+이 프로젝트를 통해 Flutter에서 페이지 간 이동을 구현하고, 데이터를 전달하며, 페이지 스택을 관리하는 방법에 대해 더 명쾌하게 이해할 수 있었습니다.
+
 
