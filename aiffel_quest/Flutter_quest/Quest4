@@ -1,0 +1,320 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(MyApp()); // 앱 실행
+}
+
+class MyApp extends StatelessWidget { // 앱의 루트 위젯
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      home: HomePage(), // 홈페이지를 시작 페이지로 설정
+    );
+  }
+}
+
+class HomePage extends StatefulWidget { // 홈페이지 위젯
+  @override
+  _HomePageState createState() => _HomePageState(); // 상태 관리를 위한 State 객체 생성
+}
+
+class _HomePageState extends State<HomePage> { // 홈페이지의 상태를 관리하는 클래스
+  int _selectedIndex = 0; // 현재 선택된 탭의 인덱스
+
+  static final List<Widget> _widgetOptions = <Widget>[ // 각 탭에 해당하는 위젯들
+    FirstScreen(),
+    ReservationScreen(),
+    CalendarScreen(),
+  ];
+
+  void _onItemTapped(int index) { // 탭이 탭될 때 호출되는 함수
+    setState(() { // 상태를 업데이트
+      _selectedIndex = index; // 선택된 탭의 인덱스를 업데이트
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) { // 홈페이지 UI를 구성하는 함수
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('ZOOM 4.0'), // 앱바 제목
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search), // 검색 아이콘 버튼
+            onPressed: () { // 검색 버튼이 눌렸을 때 호출되는 함수
+              showSearch(context: context, delegate: CustomSearchDelegate());
+            },
+          ),
+        ],
+      ),
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex), // 현재 선택된 탭에 해당하는 위젯을 표시
+      ),
+      bottomNavigationBar: BottomNavigationBar( // 하단 네비게이션 바
+        items: <BottomNavigationBarItem>[ // 각 탭 아이템들
+          BottomNavigationBarItem(
+            icon: Icon(Icons.add),
+            label: '새 회의',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.calendar_today),
+            label: '예약',
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.event),
+            label: '캘린더 추가',
+          ),
+        ],
+        currentIndex: _selectedIndex, // 현재 선택된 탭의 인덱스
+        selectedItemColor: Colors.amber[800], // 선택된 탭의 색상
+        onTap: _onItemTapped, // 탭이 탭될 때 호출되는 함수
+      ),
+    );
+  }
+}
+
+class FirstScreen extends StatelessWidget { // 첫 번째 화면 위젯
+  @override
+  Widget build(BuildContext context) { // 첫 번째 화면 UI를 구성하는 함수
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Icon(Icons.home),
+                Icon(Icons.notifications),
+                Icon(Icons.message),
+                Icon(Icons.person),
+              ],
+            ),
+            SizedBox(height: 20),
+            Text(
+              '캘린더 추가',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            ElevatedButton(
+              onPressed: () { // 버튼이 눌렸을 때 호출되는 함수
+                Navigator.push( // 새로운 화면으로 이동
+                  context,
+                  MaterialPageRoute(builder: (context) => NewMeetingScreen()),
+                );
+              },
+              child: Text('새로운 이벤트'),
+            ),
+            SizedBox(height: 20),
+            Column(
+              children: <Widget>[
+                Text(
+                  '예정된 회의 없음',
+                  style: TextStyle(fontSize: 24),
+                ),
+                Text(
+                  '예약된 회의가 여기에 나열됩니다',
+                  style: TextStyle(fontSize: 16),
+                ),
+              ],
+            ),
+            Spacer(),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: <Widget>[
+                Icon(Icons.home),
+                Icon(Icons.search),
+                Icon(Icons.add_circle_outline),
+                Icon(Icons.message),
+                Icon(Icons.menu),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class NewMeetingScreen extends StatelessWidget { // 새로운 이벤트 화면 위젯
+  @override
+  Widget build(BuildContext context) { // 새로운 이벤트 화면 UI를 구성하는 함수
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('새로운 이벤트'), // 앱바 제목
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              Text(
+                '새로운 이벤트',
+                style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: '회의 제목', // 텍스트 필드 레이블
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: '회의 링크', // 텍스트 필드 레이블
+                ),
+              ),
+              SizedBox(height: 10),
+              TextField(
+                decoration: InputDecoration(
+                  labelText: '날짜 및 시간', // 텍스트 필드 레이블
+                ),
+              ),
+              SizedBox(height: 20),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: <Widget>[
+                  ElevatedButton(
+                    onPressed: () {}, // 버튼이 눌렸을 때 호출되는 함수
+                    child: Text('추가'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context); // 이전 화면으로 돌아가는 함수
+                    },
+                    child: Text('취소'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class ReservationScreen extends StatelessWidget { // 회의 예약 화면 위젯
+  @override
+  Widget build(BuildContext context) { // 회의 예약 화면 UI를 구성하는 함수
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '회의 예약',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SizedBox(height: 10),
+            Text('Timothy의 Zoom 회의'),
+            SizedBox(height: 10),
+            Text('https://us05web.zoom.us/i/...'),
+            SizedBox(height: 10),
+            Text('2024. 7. 13. 오후 2:00 - 오후 2:30'),
+            SizedBox(height: 10),
+            Text('서울 표준 시간대'),
+            SizedBox(height: 20),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: <Widget>[
+                ElevatedButton(
+                  onPressed: () {}, // 버튼이 눌렸을 때 호출되는 함수
+                  child: Text('추가'),
+                ),
+                ElevatedButton(
+                  onPressed: () {}, // 버튼이 눌렸을 때 호출되는 함수
+                  child: Text('취소'),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CalendarScreen extends StatelessWidget { // 캘린더 추가 화면 위젯
+  @override
+  Widget build(BuildContext context) { // 캘린더 추가 화면 UI를 구성하는 함수
+    return Center(
+      child: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Text(
+              '캘린더 추가',
+              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
+            ),
+            SwitchListTile(
+              title: Text('회의 시작 15분 전 알림'),
+              value: true,
+              onChanged: (bool value) {}, // 스위치 상태가 변경될 때 호출되는 함수
+            ),
+            SwitchListTile(
+              title: Text('회의 시작 30분 전 알림'),
+              value: false,
+              onChanged: (bool value) {}, // 스위치 상태가 변경될 때 호출되는 함수
+            ),
+            SwitchListTile(
+              title: Text('회의 시작 1시간 전 알림'),
+              value: true,
+              onChanged: (bool value) {}, // 스위치 상태가 변경될 때 호출되는 함수
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class CustomSearchDelegate extends SearchDelegate { // 사용자 정의 검색 위임 클래스
+  @override
+  List<Widget> buildActions(BuildContext context) { // 액션 버튼을 구성하는 함수
+    return [
+      IconButton(
+        icon: Icon(Icons.clear), // 아이콘 버튼
+        onPressed: () {
+          query = ''; // 검색 쿼리를 초기화하는 함수
+        },
+      ),
+    ];
+  }
+
+  @override
+  Widget buildLeading(BuildContext context) { // 앞쪽 위젯을 구성하는 함수
+    return IconButton(
+      icon: Icon(Icons.arrow_back), // 아이콘 버튼
+      onPressed: () {
+        close(context, null); // 검색 화면을 닫는 함수
+      },
+    );
+  }
+
+  @override
+  Widget buildResults(BuildContext context) { // 검색 결과를 구성하는 함수
+    // TODO: Implement buildResults
+    throw UnimplementedError();
+  }
+
+  @override
+  Widget buildSuggestions(BuildContext context) { // 검색 제안을 구성하는 함수
+    // TODO: Implement buildSuggestions
+    throw UnimplementedError();
+  }
+}
+
+// 회고:
+
+// 사용자 경험을 향상시키고 “ZOOM 4.0” 예약 시스템의 인터페이스를 간소화하기 위해, 저는 다양한 기능을 통합하는 여정을 시작했습니다. 그러나 복잡성이 오히려 기능성을 가리게 되는 결정적인 순간에 부딪혔고, 이로 인해 오버플로 오류가 발생하고 코드베이스가 복잡해졌습니다.
+
+// 다수의 기능을 추가하는 것이 처음에는 좋은 의도로 시작되었지만, 이는 덜 직관적이고 더욱 번거로운 사용자 인터페이스를 초래하게 되었습니다. 이러한 인식은 단순화를 향한 전략적인 전환을 촉발시켰습니다. 필수 기능들로 줄여나가면서 저는 원활하고 사용자 친화적인 경험을 제공하는 핵심 목표에 다시 집중하게 되었습니다.
+
+// 이러한 성찰 과정은 기능의 다양성과 사용자 편의성 사이의 균형을 유지하는 것의 중요성을 강조하였습니다. 추가된 ReservationScreen의 부가적인 기능들을 제외함으로써 사용자 중심의 좀 더 간결한 코드를 구현하려 노력했습니다.
+
+// 추가하려된 기능들: 회의 ID, 비밀번호, 위치, 캘린더 선택 드롭다운 메뉴 등
