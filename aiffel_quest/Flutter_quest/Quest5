@@ -1,1 +1,113 @@
+import 'dart:convert';  // JSON 변환을 위한 라이브러리를 가져옵니다
+import 'package:flutter/material.dart';  // Flutter의 Material 디자인 위젯 라이브러리를 가져옵니다
+import 'package:http/http.dart' as http;  // HTTP 요청을 위한 라이브러리를 가져옵니다
+
+void main() {
+  runApp(MyApp());  // 앱을 실행합니다
+}
+
+class MyApp extends StatelessWidget {  // Stateless 위젯인 MyApp 클래스를 정의합니다
+  @override
+  Widget build(BuildContext context) {  // 위젯을 구성하는 주요 메서드를 오버라이드합니다
+    return MaterialApp(  // MaterialApp 위젯을 반환합니다
+      home: MyHomePage(),  // 홈으로 MyHomePage 위젯을 사용합니다
+    );
+  }
+}
+
+class MyHomePage extends StatefulWidget {  // StatefulWidget인 MyHomePage 클래스를 정의합니다
+  @override
+  _MyHomePageState createState() => _MyHomePageState();  // 상태를 관리하는 객체를 생성합니다
+}
+
+class _MyHomePageState extends State<MyHomePage> {  // 상태를 관리하는 클래스를 정의합니다
+  String result = "";  // 결과를 저장할 문자열을 정의합니다
+  String result_1 = "";  // 결과를 저장할 또 다른 문자열을 정의합니다
+  TextEditingController urlController = TextEditingController();  // URL을 입력 받는 컨트롤러를 정의합니다
+
+  Future<void> fetchData() async {  // 데이터를 가져오는 비동기 메서드를 정의합니다
+    try {
+      final enteredUrl = urlController.text;  // 입력된 URL을 가져옵니다
+      final response = await http.get(  // HTTP GET 요청을 보냅니다
+        Uri.parse(enteredUrl + "sample"),  // 입력된 URL을 사용합니다
+        headers: {
+          'Content-Type': 'application/json',
+          'ngrok-skip-browser-warning': '69420',
+        },
+      );
+      if (response.statusCode == 200) {  // 상태 코드가 200인 경우
+        final data = jsonDecode(response.body);  // 응답 본문을 JSON으로 변환합니다
+        setState(() {  // 상태를 업데이트합니다
+          result = "예측값: ${data['predicted_label']}";  // 결과 문자열을 업데이트합니다
+        });
+      } else {  // 상태 코드가 200이 아닌 경우
+        setState(() {
+          result = "Failed to fetch data. Status Code: ${response.statusCode}";  // 오류 메시지를 업데이트합니다
+        });
+      }
+    } catch (e) {  // 예외를 처리합니다
+      setState(() {
+        result = "Error: $e";  // 오류 메시지를 업데이트합니다
+      });
+    }
+  }
+
+  // fetchData_1 메서드는 fetchData와 유사하게 작동하지만, 결과 문자열을 다르게 업데이트합니다.
+
+  @override
+  Widget build(BuildContext context) {  // 위젯을 구성하는 주요 메서드를 오버라이드합니다
+    return Scaffold(  // Scaffold 위젯을 반환합니다
+      appBar: AppBar(  // 앱 바를 설정합니다
+        leading: Container(
+          margin: EdgeInsets.all(10.0),
+          child: Image.network(
+            'https://th.bing.com/th?id=OIP.07W8hBbFsxGSqqofAuoYIAHaHa&w=250&h=250&c=8&rs=1&qlt=90&o=6&dpr=1.3&pid=3.1&rm=2',  // 해파리 아이콘 이미지 URL
+            width: 40,
+            height: 40,
+          ),
+        ),
+        backgroundColor: Color(0xff37803a),  // 앱 바 배경색을 설정합니다
+        title: Center(child: Text('Jellyfish Classfier')),  // 앱 바 제목을 설정합니다
+      ),
+      body: Center(  // 본문 내용을 설정합니다
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            Image.network(
+              'https://th.bing.com/th/id/OIP.mHXMZ85oq5gYgjeVg4mWjQHaE7?w=256&h=180&c=7&r=0&o=5&dpr=1.3&pid=1.7',  // 해파리 이미지 URL
+              width: 300,
+              height: 300,
+            ),
+            TextField(
+              controller: urlController,  // URL 입력을 위한 TextField를 설정합니다
+              decoration: InputDecoration(labelText: "http://127.0.0.1:5000/"),  // 입력 필드의 라벨을 설정합니다
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,  // Row 내부 요소를 가운데 정렬합니다
+              children: [
+                ElevatedButton(
+                  onPressed: fetchData,
+                  child: Text("예측결과 버튼"),
+                ),
+                Text(
+                  result,
+                  style: TextStyle(fontSize: 18),
+                ),
+                SizedBox(width: 50),  // 버튼 사이에 간격을 추가합니다
+                ElevatedButton(
+                  onPressed: fetchData_1,
+                  child: Text("예측확률 버튼"),
+                ),
+                Text(
+                  result_1,
+                  style: TextStyle(fontSize: 18),
+                ),
+              ],
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
