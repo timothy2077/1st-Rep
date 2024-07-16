@@ -143,8 +143,6 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 }
 
-C:\Users\tiger\OneDrive\Desktop\final output.png
-
 // 회고: 처음에는 파이썬 코드와 다트 코드를 분리하여 작성하고, 마지막 단계에서 네트워크 이미지를 불러와 완성된 코드를 가볍게 수정할 계획이었습니다. 
 
 // 어제 쉽게 구현했던 FastAPI와 VGG16 모델을 사용하여 이미지를 입력받아 분류 결과를 반환하는 API를 구현하려 했습니다. 
