@@ -1,0 +1,200 @@
+import 'package:flutter/material.dart'; // Flutter 패키지에서 material.dart 라이브러리를 가져옵니다.
+import 'package:audioplayers/audioplayers.dart'; // audioplayers 패키지에서 audioplayers.dart 라이브러리를 가져옵니다.
+
+void main() {
+  runApp(const PianoApp()); // 앱을 시작합니다.
+}
+
+class PianoApp extends StatelessWidget { // PianoApp 클래스를 정의합니다. 이 클래스는 StatelessWidget을 상속받습니다.
+  const PianoApp({Key? key}) : super(key: key);
+  static AudioCache player = AudioCache(prefix: 'notes/'); // 오디오 파일을 재생하기 위한 AudioCache 객체를 생성합니다.
+
+  void playAudio(String fileName) { // 오디오 파일을 재생하는 함수를 정의합니다.
+    player.play(fileName); // AudioCache 객체의 play 메서드를 사용하여 오디오를 재생합니다.
+  }
+
+  @override
+  Widget build(BuildContext context) { // UI를 구성하는 build 메서드를 정의합니다.
+    return MaterialApp( // MaterialApp 위젯을 반환합니다.
+      debugShowCheckedModeBanner: false, // 디버그 배너를 숨깁니다.
+      home: Scaffold( // Scaffold 위젯을 home으로 설정합니다.
+        body: SafeArea( // SafeArea 위젯을 사용하여 화면의 안전한 영역 내에 내용을 배치합니다.
+          child: Column( // Column 위젯을 사용하여 자식 위젯들을 세로로 배열합니다.
+            children: [ // 여러 개의 자식 위젯을 배열로 제공합니다.
+              PianoButton( // PianoButton 위젯을 생성합니다.
+                label: 'B3', // 라벨을 'B3'으로 설정합니다.
+                onSecondWhitePress: () { // 흰색 키를 눌렀을 때의 동작을 정의합니다.
+                  playAudio('b3.mp3'); // 'b3.mp3' 오디오 파일을 재생합니다.
+                },
+              ),
+              PianoButtonSuperKey( // PianoButtonSuperKey 위젯을 생성합니다.
+                whiteLabel: 'C4', // 흰색 키의 라벨을 'C4'로 설정합니다.
+                blackLabel: 'C#4', // 검은색 키의 라벨을 'C#4'로 설정합니다.
+                onBlackPress: () { // 검은색 키를 눌렀을 때의 동작을 정의합니다.
+                  playAudio('c#4.mp3'); // 'c#4.mp3' 오디오 파일을 재생합니다.
+                },
+                onWhitePress: () { // 흰색 키를 눌렀을 때의 동작을 정의합니다.
+                  playAudio('c4.mp3'); // 'c4.mp3' 오디오 파일을 재생합니다.
+                },
+              ),
+              // 이하 코드는 위와 동일한 패턴으로 피아노 키를 생성합니다.
+              PianoButtonSuperKey(
+                whiteLabel: 'D4',
+                blackLabel: 'D#4',
+                onBlackPress: () {
+                  playAudio('d#4.mp3');
+                },
+                onWhitePress: () {
+                  playAudio('d4.mp3');
+                },
+              ),
+              PianoButton(
+                label: 'E4',
+                onSecondWhitePress: () {
+                  playAudio('e4.mp3');
+                },
+              ),
+              PianoButtonSuperKey(
+                whiteLabel: 'F4',
+                blackLabel: 'F#4',
+                onBlackPress: () {
+                  playAudio('f#4.mp3');
+                },
+                onWhitePress: () {
+                  playAudio('f4.mp3');
+                },
+              ),
+              PianoButtonSuperKey(
+                whiteLabel: 'G4',
+                blackLabel: 'G#4',
+                onBlackPress: () {
+                  playAudio('g#4.mp3');
+                },
+                onWhitePress: () {
+                  playAudio('g4.mp3');
+                },
+              ),
+              PianoButton(
+                label: 'A4',
+                onSecondWhitePress: () {
+                  playAudio('a4.mp3');
+                },
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+// PianoButtonSuperKey 클래스를 정의합니다. 이 클래스는 StatelessWidget을 상속받습니다.
+// 이 클래스는 흰색 키와 검은색 키를 동시에 표현하는 피아노 키 위젯입니다.
+class PianoButtonSuperKey extends StatelessWidget {
+  final VoidCallback onWhitePress; // 흰색 키를 눌렀을 때의 동작을 정의하는 콜백입니다.
+  final VoidCallback onBlackPress; // 검은색 키를 눌렀을 때의 동작을 정의하는 콜백입니다.
+  final String whiteLabel; // 흰색 키의 라벨입니다.
+  final String blackLabel; // 검은색 키의 라벨입니다.
+
+  PianoButtonSuperKey({
+    Key? key,
+    required this.onWhitePress,
+    required this.onBlackPress,
+    required this.whiteLabel,
+    required this.blackLabel,
+  }) : super(key: key);
+
+  final ButtonStyle whiteButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: Colors.white60, // 흰색 키의 배경색을 설정합니다.
+    side: BorderSide.none,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.zero,
+    ),
+  );
+
+  final ButtonStyle blackButtonStyle = ElevatedButton.styleFrom(
+    backgroundColor: Colors.black, // 검은색 키의 배경색을 설정합니다.
+  );
+
+  @override
+  Widget build(BuildContext context) { // UI를 구성하는 build 메서드를 정의합니다.
+    return Expanded(
+      child: Stack( // Stack 위젯을 사용하여 자식 위젯들을 겹치게 배치합니다.
+        clipBehavior: Clip.none,
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(0.0),
+            child: Container(
+              decoration: BoxDecoration(
+                border: Border.all(),
+              ),
+              height: double.infinity,
+              width: double.infinity,
+              child: ElevatedButton(
+                style: whiteButtonStyle,
+                onPressed: onWhitePress,
+                child: Text(whiteLabel), // 흰색 키의 라벨을 표시합니다.
+              ),
+            ),
+          ),
+          Positioned(
+            top: -25.0,
+            child: Container(
+              height: 75.0,
+              width: 250.0,
+              child: ElevatedButton(
+                style: blackButtonStyle,
+                onPressed: onBlackPress,
+                child: Text(blackLabel,
+                    style: TextStyle(color: Colors.white)), // 검은색 키의 라벨을 표시합니다.
+              ),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+// PianoButton 클래스를 정의합니다. 이 클래스는 StatelessWidget을 상속받습니다.
+// 이 클래스는 흰색 키만 표현하는 피아노 키 위젯입니다.
+class PianoButton extends StatelessWidget {
+  final VoidCallback onSecondWhitePress; // 흰색 키를 눌렀을 때의 동작을 정의하는 콜백입니다.
+  final String label; // 흰색 키의 라벨입니다.
+
+  PianoButton({
+    Key? key,
+    required this.onSecondWhitePress,
+    required this.label,
+  }) : super(key: key);
+
+  final ButtonStyle style2 = ElevatedButton.styleFrom(
+    backgroundColor: Colors.white60, // 흰색 키의 배경색을 설정합니다.
+    side: BorderSide.none,
+    shape: const RoundedRectangleBorder(
+      borderRadius: BorderRadius.zero,
+    ),
+  );
+
+  @override
+  Widget build(BuildContext context) { // UI를 구성하는 build 메서드를 정의합니다.
+    return Expanded(
+      flex: 1,
+      child: Padding(
+        padding: const EdgeInsets.all(0.0),
+        child: Container(
+          decoration: BoxDecoration(
+            border: Border.all(),
+          ),
+          height: double.infinity,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: style2,
+            onPressed: onSecondWhitePress,
+            child: Text(label), // 흰색 키의 라벨을 표시합니다.
+          ),
+        ),
+      ),
+    );
+  }
+}
