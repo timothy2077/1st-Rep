@@ -1,83 +1,82 @@
-import 'package:flutter/material.dart'; 
-import 'package:audioplayers/audioplayers.dart'; // audioplayers 패키지에서 audioplayers.dart 라이브러리를 호출
+import 'package:flutter/material.dart';
+import 'package:audioplayers/audioplayers.dart';
 
 void main() {
   runApp(const PianoApp()); 
 }
 
-class PianoApp extends StatelessWidget { // PianoApp 클래스를 정의하며 이 클래스는 StatelessWidget을 상속받음
+class PianoApp extends StatelessWidget {
   const PianoApp({Key? key}) : super(key: key);
-  static AudioCache player = AudioCache(prefix: 'notes/'); // 오디오 파일을 재생하기 위한 AudioCache 객체를 생성
+  static AudioCache player = AudioCache(prefix: 'notes/'); // 오디오 플레이어를 초기화
 
-  void playAudio(String fileName) { // 오디오 파일을 재생하는 함수를 정의
-    player.play(fileName); // AudioCache 객체의 play 메서드를 사용하여 오디오를 재생
+  void playAudio(String fileName) {
+    player.play(fileName); // 오디오 파일을 재생하는 함수
   }
 
   @override
-  Widget build(BuildContext context) { // UI를 구성하는 build 메서드를 정의
-    return MaterialApp( // MaterialApp 
-      debugShowCheckedModeBanner: false, 
-      home: Scaffold( // Scaffold 위젯을 home으로 설정
-        body: SafeArea( // SafeArea 위젯을 사용하여 화면의 안전한 영역 내에 내용을 배치
-          child: Column( // Column 위젯을 사용하여 자식 위젯들을 세로로 배열
-            children: [ // 
-              PianoButton( // PianoButton 위젯을 생성
-                label: 'B3', // 라벨을 'B3'으로 설정
-                onSecondWhitePress: () { // 흰색 키를 눌렀을 때의 동작을 정의
-                  playAudio('b3.mp3'); // 'b3.mp3' 오디오 파일을 재생
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        body: SafeArea(
+          child: Column(
+            children: [
+              PianoButton(
+                label: 'B3',
+                onSecondWhitePress: () {
+                  playAudio('b3.mp3'); 
                 },
               ),
-              PianoButtonSuperKey( // PianoButtonSuperKey 
-                whiteLabel: 'C4', // 흰색 키의 라벨을 'C4'로 설정
-                blackLabel: 'C#4', // 검은색 키의 라벨을 'C#4'로 설정
-                onBlackPress: () { // 검은색 키를 눌렀을 때의 동작을 정의
-                  playAudio('c#4.mp3'); // 'c#4.mp3' 오디오 파일을 재생
+              PianoButtonSuperKey(
+                whiteLabel: 'C4',
+                blackLabel: 'C#4',
+                onBlackPress: () {
+                  playAudio('c4.mp3'); 
                 },
-                onWhitePress: () { // 흰색 키를 눌렀을 때의 동작을 정의
-                  playAudio('c4.mp3'); // 'c4.mp3' 오디오 파일을 재생
+                onWhitePress: () {
+                  playAudio('c4.mp3'); 
                 },
               ),
-              // 이하 코드는 위와 동일한 패턴으로 피아노 키를 생성
               PianoButtonSuperKey(
                 whiteLabel: 'D4',
                 blackLabel: 'D#4',
                 onBlackPress: () {
-                  playAudio('d#4.mp3');
+                  playAudio('d4.mp3'); 
                 },
                 onWhitePress: () {
-                  playAudio('d4.mp3');
+                  playAudio('d4.mp3'); 
                 },
               ),
               PianoButton(
                 label: 'E4',
                 onSecondWhitePress: () {
-                  playAudio('e4.mp3');
+                  playAudio('e4.mp3'); 
                 },
               ),
               PianoButtonSuperKey(
                 whiteLabel: 'F4',
                 blackLabel: 'F#4',
                 onBlackPress: () {
-                  playAudio('f#4.mp3');
+                  playAudio('f4.mp3'); 
                 },
                 onWhitePress: () {
-                  playAudio('f4.mp3');
+                  playAudio('f4.mp3'); 
                 },
               ),
               PianoButtonSuperKey(
                 whiteLabel: 'G4',
                 blackLabel: 'G#4',
                 onBlackPress: () {
-                  playAudio('g#4.mp3');
+                  playAudio('g4.mp3'); 
                 },
                 onWhitePress: () {
-                  playAudio('g4.mp3');
+                  playAudio('g4.mp3'); 
                 },
               ),
               PianoButton(
-                label: 'A4',
+                label: 'H4',
                 onSecondWhitePress: () {
-                  playAudio('a4.mp3');
+                  playAudio('c6.mp3'); 
                 },
               ),
             ],
@@ -88,13 +87,11 @@ class PianoApp extends StatelessWidget { // PianoApp 클래스를 정의하며 �
   }
 }
 
-// PianoButtonSuperKey 클래스를 정의하며 이 클래스는 StatelessWidget을 상속받음
-// 이 클래스는 흰색 키와 검은색 키를 동시에 표현하는 피아노 키 위젯
 class PianoButtonSuperKey extends StatelessWidget {
-  final VoidCallback onWhitePress; // 흰색 키를 눌렀을 때의 동작을 정의하는 콜백
-  final VoidCallback onBlackPress; // 검은색 키를 눌렀을 때의 동작을 정의하는 콜백
-  final String whiteLabel; // 흰색 키의 라벨
-  final String blackLabel; // 검은색 키의 라벨
+  final VoidCallback onWhitePress;
+  final VoidCallback onBlackPress;
+  final String whiteLabel;
+  final String blackLabel;
 
   PianoButtonSuperKey({
     Key? key,
@@ -117,9 +114,9 @@ class PianoButtonSuperKey extends StatelessWidget {
   );
 
   @override
-  Widget build(BuildContext context) { // UI를 구성하는 build 메서드를 정의
+  Widget build(BuildContext context) {
     return Expanded(
-      child: Stack( // Stack 위젯을 사용하여 자식 위젯들을 겹치게 배치
+      child: Stack(
         clipBehavior: Clip.none,
         children: [
           Padding(
@@ -133,7 +130,7 @@ class PianoButtonSuperKey extends StatelessWidget {
               child: ElevatedButton(
                 style: whiteButtonStyle,
                 onPressed: onWhitePress,
-                child: Text(whiteLabel), // 흰색 키의 라벨을 표시
+                child: Text(whiteLabel), // 흰색 키의 레이블을 설정
               ),
             ),
           ),
@@ -146,7 +143,7 @@ class PianoButtonSuperKey extends StatelessWidget {
                 style: blackButtonStyle,
                 onPressed: onBlackPress,
                 child: Text(blackLabel,
-                    style: TextStyle(color: Colors.white)), // 검은색 키의 라벨을 표시
+                    style: TextStyle(color: Colors.white)), // 검은색 키의 레이블을 설정
               ),
             ),
           ),
@@ -156,11 +153,9 @@ class PianoButtonSuperKey extends StatelessWidget {
   }
 }
 
-// PianoButton 클래스를 정의하며 이 클래스는 StatelessWidget을 상속
-// 이 클래스는 흰색 키만 표현하는 피아노 키 위젯
 class PianoButton extends StatelessWidget {
-  final VoidCallback onSecondWhitePress; // 흰색 키를 눌렀을 때의 동작을 정의하는 콜백
-  final String label; // 흰색 키의 라벨
+  final VoidCallback onSecondWhitePress;
+  final String label;
 
   PianoButton({
     Key? key,
@@ -177,7 +172,7 @@ class PianoButton extends StatelessWidget {
   );
 
   @override
-  Widget build(BuildContext context) { // UI를 구성하는 build 메서드를 정의
+  Widget build(BuildContext context) {
     return Expanded(
       flex: 1,
       child: Padding(
@@ -191,7 +186,7 @@ class PianoButton extends StatelessWidget {
           child: ElevatedButton(
             style: style2,
             onPressed: onSecondWhitePress,
-            child: Text(label), 
+            child: Text(label), // 흰색 키의 레이블을 설정
           ),
         ),
       ),
