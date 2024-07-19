@@ -1,4 +1,7 @@
-Information Architecture Diagram (정보구조도)
+## Information Architecture Diagram (정보 구조도)
 
-![image](https://github.com/user-attachments/assets/8235f8df-d858-4812-a79a-96e5ca6377da)
+![image](https://github.com/user-attachments/assets/2cedaabd-60b3-4b1e-9308-69e4c66ab911)
+
+
+
 
